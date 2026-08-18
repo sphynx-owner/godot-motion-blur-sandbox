@@ -5,13 +5,14 @@ extends CompositorEffect
 # When the color texture has generated, this signal will be emitted
 signal texture_generated(color_texture: Texture2DRD)
 
+var current_accumulation: int = 1
+
 var rd: RenderingDevice
 var shader: RID
 var pipeline: RID
 
 var nearest_sampler: RID
 
-var texture_format := RDTextureFormat.new()
 var texture: RID
 var texture_2d_rd := Texture2DRD.new()
 
@@ -76,7 +77,7 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 	if size.x == 0 and size.y == 0:
 		return
 	
-	if not texture.is_valid() or texture_format.width != size.x or texture_format.height != size.y:
+	if not texture.is_valid() or Vector2i(texture_2d_rd.get_size()) != size:
 		_build_texture(size.x, size.y)
 	
 	# Define invocation group size
@@ -104,11 +105,16 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 	var compute_list: int = rd.compute_list_begin()
 	
 	var push_constants: PackedInt32Array = [
-		10,
+		current_accumulation,
 		0,
 		0,
 		0
 	]
+	
+	# NOTE @sphynx-owner: imporatnt that the accumulation
+	# increments after it's fed to the push constants, otherwise
+	# it would never start at 1.
+	current_accumulation += 1
 	
 	var byte_push_constants: PackedByteArray = push_constants.to_byte_array()
 	
@@ -124,6 +130,10 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 ## Note: this texture must be the same size as the color texture, so we create
 ## it on demand.
 func _build_texture(width: int, height: int):
+	print("compositor building texture")
+	
+	var texture_format := RDTextureFormat.new()
+	
 	# create our output texture
 	texture_format = RDTextureFormat.new()
 	texture_format.texture_type = RenderingDevice.TEXTURE_TYPE_2D

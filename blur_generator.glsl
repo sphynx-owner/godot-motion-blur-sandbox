@@ -34,5 +34,5 @@ void main()
 	}
 
 	// Feed the final position into our output position texture
-	imageStore(average_output, uvi, vec4(texelFetch(color_sampler, uvi, 0).rgb, 1.0));//(imageLoad(average_output, uvi) * (params.accum_count - 1) + vec4(texelFetch(color_sampler, uvi, 0).rgb, 1.0)) / params.accum_count);
+	imageStore(average_output, uvi, (imageLoad(average_output, uvi) * (params.accum_count - 1) + vec4(texelFetch(color_sampler, uvi, 0).rgb, 1.0)) / params.accum_count);//vec4(texelFetch(color_sampler, uvi, 0).rgb, 1.0));//
 }
