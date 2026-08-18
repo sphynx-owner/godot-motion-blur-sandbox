@@ -11,7 +11,39 @@ extends TextureRect
 
 @export var centered: bool = true
 
+@export_tool_button("set up compositor") var set_up_compositor = _set_up_compositor
+
 @export_tool_button("generate") var generate = _generate
+
+
+func _set_up_compositor() -> void:
+	var viewport: SubViewport = replayer.get_parent()
+	
+	var camera: Camera3D
+	
+	for child in viewport.get_children():
+		if child is Camera3D:
+			camera = child
+			break
+	
+	if !camera:
+		push_error("could not find camera")
+		return
+	
+	if !camera.compositor:
+		camera.compositor = Compositor.new()
+	
+	for effect in camera.compositor.compositor_effects:
+		if effect is BlurGeneratorCompositor:
+			return
+	
+	camera.compositor.compositor_effects = camera.compositor.compositor_effects + [BlurGeneratorCompositor.new()]
+	
+	(camera.compositor.compositor_effects[0] as BlurGeneratorCompositor).texture_generated.connect(_on_texture_generated)
+
+
+func _on_texture_generated(p_texture: Texture2DRD) -> void:
+	texture = p_texture
 
 
 func _generate() -> void:
