@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c33ytwqvrplfl"]
+
+[ext_resource type="Script" uid="uid://ctxi48q38nwdf" path="res://benchmarks/playground/spawned.gd" id="1_d5hg8"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_mgdjv"]
+
+[node name="Spawned" type="MeshInstance3D" unique_id=1805778663]
+mesh = SubResource("SphereMesh_mgdjv")
+script = ExtResource("1_d5hg8")

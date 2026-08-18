@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://rxmmrliarso5"]
+
+[ext_resource type="PackedScene" uid="uid://b4t1vbd82lvn5" path="res://addons/sphynx_replay_tool/ui/relpay_menu.tscn" id="1_8robq"]
+[ext_resource type="Script" uid="uid://cqel2pdrnuolt" path="res://camera_3d.gd" id="2_wnnsp"]
+[ext_resource type="Texture2D" uid="uid://cnfwl8040q4mt" path="res://icon.svg" id="3_o1hov"]
+[ext_resource type="Script" uid="uid://br6rroh08c1wk" path="res://benchmarks/playground/mesh_instance_3d_2.gd" id="4_wnnsp"]
+[ext_resource type="Script" uid="uid://d27atpvyrqmvq" path="res://benchmarks/playground/spawner.gd" id="5_o1hov"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4fh6k"]
+ground_bottom_color = Color(0.7907238, 0.73137456, 0.6657407, 1)
+
+[sub_resource type="Sky" id="Sky_aa0ni"]
+sky_material = SubResource("ProceduralSkyMaterial_4fh6k")
+
+[sub_resource type="Environment" id="Environment_5v3c7"]
+background_mode = 2
+sky = SubResource("Sky_aa0ni")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_d5wxy"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5h11f"]
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bx8n8"]
+albedo_texture = ExtResource("3_o1hov")
+
+[sub_resource type="BoxMesh" id="BoxMesh_5h11f"]
+
+[node name="Playground" type="Node3D" unique_id=906616437]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=333102380]
+
+[node name="FocusControl" type="Control" parent="CanvasLayer" unique_id=1875294941]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+
+[node name="RelpayMenu" parent="CanvasLayer" unique_id=937283115 instance=ExtResource("1_8robq")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=139412736]
+environment = SubResource("Environment_5v3c7")
+camera_attributes = SubResource("CameraAttributesPractical_d5wxy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=759137879]
+transform = Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1559026898]
+transform = Transform3D(-0.76206297, -0.4217897, 0.4912774, 0, 0.7587261, 0.6514098, -0.6475029, 0.49641526, -0.5781971, 11.660009, 16.856941, -13.644352)
+script = ExtResource("2_wnnsp")
+initial_mouse_mode = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=762995117]
+mesh = SubResource("PlaneMesh_5h11f")
+surface_material_override/0 = SubResource("StandardMaterial3D_bx8n8")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1330147994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9259956, 0)
+mesh = SubResource("BoxMesh_5h11f")
+script = ExtResource("4_wnnsp")
+
+[node name="Spawner" type="Node3D" parent="." unique_id=590361462 node_paths=PackedStringArray("timer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2642224, 2.598138, 2.3369188)
+script = ExtResource("5_o1hov")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="Spawner" unique_id=818856384]
+wait_time = 0.5
+autostart = true
+
+[editable path="CanvasLayer/RelpayMenu"]

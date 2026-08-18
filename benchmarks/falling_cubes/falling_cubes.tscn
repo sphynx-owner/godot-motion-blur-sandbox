@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://bngg0hdt3buas"]
+
+[ext_resource type="Script" uid="uid://bkjpm2dp8knf3" path="res://benchmarks/falling_cubes/cube_spawner.gd" id="1_aa0ni"]
+[ext_resource type="PackedScene" uid="uid://b4t1vbd82lvn5" path="res://addons/sphynx_replay_tool/ui/relpay_menu.tscn" id="1_dgpyu"]
+[ext_resource type="Script" uid="uid://cqel2pdrnuolt" path="res://camera_3d.gd" id="11_e2kve"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w8xxa"]
+ground_bottom_color = Color(0.7907238, 0.73137456, 0.6657407, 1)
+
+[sub_resource type="Sky" id="Sky_aa0ni"]
+sky_material = SubResource("ProceduralSkyMaterial_w8xxa")
+
+[sub_resource type="Environment" id="Environment_r6scx"]
+background_mode = 2
+sky = SubResource("Sky_aa0ni")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_mckeo"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_w8xxa"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_aa0ni"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dgpyu"]
+stencil_mode = 3
+stencil_flags = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_74s67"]
+size = Vector2(3.46, 4.24)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xoery"]
+
+[node name="FallingCubes" type="Node3D" unique_id=1662821353]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1188850348]
+
+[node name="FocusControl" type="Control" parent="CanvasLayer" unique_id=835918495]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+
+[node name="RelpayMenu" parent="CanvasLayer" unique_id=57315067 instance=ExtResource("1_dgpyu")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=1432914064]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -54.5
+offset_top = -40.0
+offset_right = 54.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="SpawnButton" type="Button" parent="CanvasLayer/HBoxContainer" unique_id=2097653394]
+layout_mode = 2
+text = "spawn"
+
+[node name="ClearButton" type="Button" parent="CanvasLayer/HBoxContainer" unique_id=9997706]
+layout_mode = 2
+text = "clear"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=229132950]
+environment = SubResource("Environment_r6scx")
+camera_attributes = SubResource("CameraAttributesPractical_mckeo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1757729023]
+transform = Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)
+
+[node name="RigidBody3D" type="StaticBody3D" parent="." unique_id=1961197869]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1919021371]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("SphereShape3D_w8xxa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/CollisionShape3D" unique_id=1991908533]
+mesh = SubResource("SphereMesh_aa0ni")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_dgpyu")
+
+[node name="CubeSpawner" type="Node3D" parent="." unique_id=1096213360]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.770802, 0)
+script = ExtResource("1_aa0ni")
+spawn_at_start = false
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=345321432]
+transform = Transform3D(-0.76206297, -0.4217897, 0.4912774, 0, 0.7587261, 0.6514098, -0.6475029, 0.49641526, -0.5781971, 11.660009, 16.856941, -13.644352)
+script = ExtResource("11_e2kve")
+initial_mouse_mode = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1891666167]
+transform = Transform3D(-0.4757305, -0.28827983, 0.8310086, 0.05848995, 0.93230784, 0.35690486, -0.8776444, 0.2183962, -0.4266658, 4.7730637, 8.587922, -9.7421)
+mesh = SubResource("QuadMesh_74s67")
+surface_material_override/0 = SubResource("StandardMaterial3D_xoery")
+
+[connection signal="focus_entered" from="CanvasLayer/FocusControl" to="Camera3D" method="capture_mouse"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/SpawnButton" to="CubeSpawner" method="spawn_cubes"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/ClearButton" to="CubeSpawner" method="clear_cubes"]
