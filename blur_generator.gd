@@ -2,7 +2,6 @@
 class_name BlurGenerator
 extends TextureRect
 
-
 @export var replayer: Replayer
 
 @export var resolution: int = 30
@@ -11,14 +10,6 @@ extends TextureRect
 
 @export var centered: bool = true
 
-@export_tool_button("set up compositor") var set_up_compositor = _set_up_compositor
-
-@export_tool_button("generate") var generate = _generate
-
-@export_tool_button("reset count") var reset_count = _reset_count
-
-@export_tool_button("update viewport") var update_viewport = _update_viewport
-
 var rd: RenderingDevice
 
 var effect: BlurGeneratorCompositor
@@ -26,10 +17,42 @@ var effect: BlurGeneratorCompositor
 
 func _ready() -> void:
 	rd = RenderingServer.get_rendering_device()
+	
+	_set_up_compositor()
+
+
+func generate() -> void:
+	var viewport: Viewport = replayer.get_viewport()
+	
+	var start_position: float = replayer.get_position()
+	
+	effect.current_accumulation = 1
+	
+	for i in resolution:
+		# NOTE @sphynx-owner: resolution - 1 is used to ensure the final position is at
+		# the end of the motion, instead of at a subdivision before it. It makes
+		# the range of motion captured consistent between reoslutions.
+		var current_position: float = start_position + ((i - (float(resolution - 1) / 2.0)) if centered else float(i)) / float(framerate * (resolution - 1))
+		
+		viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
+		
+		# HACK @sphynx-owner: seeking twice to force an update.
+		replayer.seek_rep(current_position)
+		replayer.seek_rep(current_position)
+		
+		await RenderingServer.frame_post_draw
+	
+	_copy_texture()
+	
+	viewport.render_target_update_mode = SubViewport.UPDATE_WHEN_VISIBLE
+	
+	# HACK @sphynx-owner: seeking twice to force an update.
+	replayer.seek_rep(start_position)
+	replayer.seek_rep(start_position)
 
 
 func _set_up_compositor() -> void:
-	var viewport: SubViewport = replayer.get_parent()
+	var viewport: Viewport = replayer.get_viewport()
 	
 	var camera: Camera3D
 	
@@ -54,43 +77,14 @@ func _set_up_compositor() -> void:
 	effect = camera.compositor.compositor_effects[0]
 
 
-func _reset_count() -> void:
-	effect.current_accumulation = 1
-
-
-func _update_viewport() -> void:
-	var viewport: SubViewport = replayer.get_parent()
-	
-	viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
-
-
-func _generate() -> void:
-	var viewport: SubViewport = replayer.get_parent()
-	
-	var start_position: float = replayer.get_position()
-	
-	_reset_count()
-	
-	for i in resolution:
-		# NOTE @sphynx-owner: resolution - 1 is used to ensure the final position is at
-		# the end of the motion, instead of at a subdivision before it. It makes
-		# the range of motion captured consistent between reoslutions.
-		var current_position: float = start_position + ((i - (float(resolution - 1) / 2.0)) if centered else float(i)) / float(framerate * (resolution - 1))
-		
-		# HACK @sphynx-owner: seeking twice to force an update.
-		replayer.seek(current_position)
-		replayer.seek(current_position)
-		
-		viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
-		
-		await RenderingServer.frame_post_draw
-	
-	# HACK @sphynx-skillcap: using a very elaborate setup to copy the texture over.
-	# I am probably just incompetent, but using effect.texture_2d_rd.get_image() and
-	# feeding it to an image texture seems broken, and for me only worked the first time,
-	# and generated the same image for following generations.
-	# NOTE @sphynx-skillcap: I am basically using the same setup from the blur generator
-	# compositor for generating the render device texture.
+# HACK @sphynx-skillcap: using a very elaborate setup to copy the texture over.
+# I am probably just incompetent, but using effect.texture_2d_rd.get_image() and
+# feeding it to an image texture seems broken, and for me only worked the first time,
+# and generated the same image for following generations.
+# NOTE @sphynx-skillcap: I am basically using the same setup from the blur generator
+# compositor for generating the render device texture. The only difference is
+# the additional required RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT usage flag
+func _copy_texture() -> void:
 	var tex_size: Vector2i = effect.texture_2d_rd.get_size()
 	
 	var temp_texture: RID
@@ -132,9 +126,3 @@ func _generate() -> void:
 			rd.free_rid(old_texture)
 	
 	rd.texture_copy(effect.texture, RenderingServer.texture_get_rd_texture(texture.get_rid()), Vector3.ZERO, Vector3.ZERO, Vector3(tex_size.x, tex_size.y, 1), 0, 0, 0, 0)
-	
-	viewport.render_target_update_mode = SubViewport.UPDATE_WHEN_VISIBLE
-	
-	# HACK @sphynx-owner: seeking twice to force an update.
-	replayer.seek(start_position)
-	replayer.seek(start_position)

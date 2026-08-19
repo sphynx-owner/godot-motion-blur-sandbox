@@ -1,10 +1,19 @@
 [gd_scene format=3 uid="uid://rxmmrliarso5"]
 
-[ext_resource type="PackedScene" uid="uid://b4t1vbd82lvn5" path="res://addons/sphynx_replay_tool/ui/relpay_menu.tscn" id="1_8robq"]
+[ext_resource type="PackedScene" uid="uid://b4t1vbd82lvn5" path="res://addons/sphynx-replay-tool/ui/relpay_menu.tscn" id="1_8robq"]
+[ext_resource type="Resource" uid="uid://bkudf8hl37ho2" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_blur_stage.tres" id="2_o3b4i"]
 [ext_resource type="Script" uid="uid://cqel2pdrnuolt" path="res://camera_3d.gd" id="2_wnnsp"]
+[ext_resource type="Resource" uid="uid://cvb65hfs2lrxo" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max_stage.tres" id="3_75n04"]
 [ext_resource type="Texture2D" uid="uid://cnfwl8040q4mt" path="res://icon.svg" id="3_o1hov"]
+[ext_resource type="Resource" uid="uid://bidsfymvdyhek" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_overlay_stage.tres" id="4_v2wl8"]
 [ext_resource type="Script" uid="uid://br6rroh08c1wk" path="res://benchmarks/playground/mesh_instance_3d_2.gd" id="4_wnnsp"]
+[ext_resource type="Resource" uid="uid://oekvkjd75764" path="res://addons/godot-motion-blur/pre_blur_processing/shader_stages/pre_blur_processing_stage.tres" id="5_7x4fh"]
 [ext_resource type="Script" uid="uid://d27atpvyrqmvq" path="res://benchmarks/playground/spawner.gd" id="5_o1hov"]
+[ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="6_onwq6"]
+[ext_resource type="Resource" uid="uid://dipvwksvqb3dm" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x_stage.tres" id="7_gm13a"]
+[ext_resource type="Resource" uid="uid://bxfg45ubc2pv7" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y_stage.tres" id="8_8x4lo"]
+[ext_resource type="Resource" uid="uid://dw0r1gbmf1hrb" path="res://addons/easy-compositor/debug/shader_stages/debug_overlay_shader_stage.tres" id="9_v2wl8"]
+[ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="10_7x4fh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4fh6k"]
 ground_bottom_color = Color(0.7907238, 0.73137456, 0.6657407, 1)
@@ -17,6 +26,31 @@ background_mode = 2
 sky = SubResource("Sky_aa0ni")
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_d5wxy"]
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_yff6y"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = true
+needs_normal_roughness = false
+script = ExtResource("6_onwq6")
+metadata/_custom_type_script = "uid://c5jewnyvlca7j"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_v2wl8"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("10_7x4fh")
+draw_debug = true
+debug_page = 1
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_5h11f"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_yff6y"), SubResource("CompositorEffect_v2wl8")])
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5h11f"]
 size = Vector2(10, 10)
@@ -44,6 +78,7 @@ focus_mode = 2
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=139412736]
 environment = SubResource("Environment_5v3c7")
 camera_attributes = SubResource("CameraAttributesPractical_d5wxy")
+compositor = SubResource("Compositor_5h11f")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=759137879]
 transform = Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)

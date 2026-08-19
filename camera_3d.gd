@@ -8,6 +8,7 @@ var speed: float = 10
 # Solves camera misalignment at the start of the scene
 var _started := false
 
+
 func _ready():
 	await RenderingServer.frame_post_draw
 	Input.mouse_mode = initial_mouse_mode
