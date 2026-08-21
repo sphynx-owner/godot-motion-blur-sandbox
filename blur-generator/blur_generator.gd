@@ -117,6 +117,12 @@ func generate() -> void:
 			Directionality.TRAILING:
 				step_offset = 0.0
 	
+	var motion_blur_effect: MotionBlurCompositorEffect = ReplayUtils.get_or_add_active_compositor_effect(replayer, MotionBlurCompositorEffect)
+	
+	motion_blur_effect.enabled = compositor_blur_enabled
+	
+	motion_blur_effect.samples = 32
+	
 	for i in resolution:
 		# HACK @sphynx-owner: for now using this to reset the first frame and ignore it from the accumulation.
 		# This is to use motion blurred subframes when accumulating.
