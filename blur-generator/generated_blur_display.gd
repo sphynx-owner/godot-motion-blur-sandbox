@@ -68,6 +68,10 @@ func copy_environment() -> void:
 	
 	new_viewport.owner = owner
 	
+	# HACK @sphynx-skillcap: a way to update the SubViewportContainer's size after
+	# adding the viewport as a child. Othewise it stays very small and easily gets culled away.
+	new_viewport.size = new_viewport.size
+	
 	var new_camera: Camera3D = ref_camera.duplicate()
 	
 	# NOTE @sphynx-owner: these properties are equivalent on the _camera and the environment,

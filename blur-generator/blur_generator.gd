@@ -20,11 +20,19 @@ enum Directionality{CENTERED, LEADING, TRAILING}
 # TODO @sphynx-owner: automatically account for when compositor blur is enabled, and add an additional iteration
 # at the start to move from into the first position.
 
-@export var replayer: Replayer
+@export var replayer: Replayer:
+	set(value):
+		replayer = value
+		
+		update_configuration_warnings()
 
-@export var display: GeneratedBlurDisplay
+@export var display: GeneratedBlurDisplay:
+	set(value):
+		display = value
+		
+		update_configuration_warnings()
 
-@export_range(1, 1000, 0, "or_greater") var resolution: int = 30
+@export_range(2, 1000, 1, "or_greater") var resolution: int = 30
 
 @export var framerate: int = 30
 
@@ -53,6 +61,18 @@ func _editor_generate() -> void:
 
 func _ready() -> void:
 	rd = RenderingServer.get_rendering_device()
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var ret: PackedStringArray
+	
+	if !replayer:
+		ret.append("replayer must be set")
+	
+	if !display:
+		ret.append("display must be set")
+	
+	return ret
 
 
 func _validate_property(property: Dictionary) -> void:
@@ -96,9 +116,7 @@ func generate() -> void:
 		Directionality.TRAILING:
 			step_offset = 0.0
 	
-	var iteration_count: int = (resolution + 1) if compositor_blur_enabled else resolution
-	
-	for i in iteration_count:
+	for i in resolution:
 		# HACK @sphynx-owner: for now using this to reset the first frame and ignore it from the accumulation.
 		# This is to use motion blurred subframes when accumulating.
 		if compositor_blur_enabled and i == 1:
