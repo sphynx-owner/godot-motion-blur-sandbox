@@ -132,7 +132,7 @@ func _set_up_compositor() -> void:
 	# HACK @sphynx-skillcap: for some reason, you can get the environment resource and camera
 	# attributes from a viewport, but not the compositor. I suspect it is a feature that no
 	# one got to implement yet.
-	var environment: WorldEnvironment = _find_environment_recursive(viewport)
+	var environment: WorldEnvironment = ReplayUtils.find_environment_recursive(viewport)
 	
 	if !environment:
 		push_error("could not find environment")
@@ -150,19 +150,6 @@ func _set_up_compositor() -> void:
 	for existing_effect in environment.compositor.compositor_effects:
 		if existing_effect is BlurGeneratorCompositor:
 			effect = existing_effect
-
-
-func _find_environment_recursive(node: Node) -> WorldEnvironment:
-	if node is WorldEnvironment:
-		return node
-	
-	for child in node.get_children():
-		var found: Node = _find_environment_recursive(child)
-		
-		if found:
-			return found
-	
-	return null
 
 
 # HACK @sphynx-skillcap: using a very elaborate setup to copy the texture over.

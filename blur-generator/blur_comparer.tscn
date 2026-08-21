@@ -74,14 +74,11 @@ albedo_texture = ExtResource("12_j33as")
 
 [sub_resource type="SphereMesh" id="SphereMesh_mgdjv"]
 
-[sub_resource type="Texture2DRD" id="Texture2DRD_f8kah"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pi0kv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4orhx"]
 render_priority = 0
 shader = ExtResource("4_q4r8d")
-shader_parameter/color = SubResource("Texture2DRD_f8kah")
 
-[sub_resource type="QuadMesh" id="QuadMesh_33nae"]
+[sub_resource type="QuadMesh" id="QuadMesh_f8kah"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_etsjh"]
 ground_bottom_color = Color(0.7907238, 0.73137456, 0.6657407, 1)
@@ -129,32 +126,23 @@ script = ExtResource("12_2f4hc")
 [sub_resource type="Compositor" id="Compositor_mihnl"]
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_wybdw"), SubResource("CompositorEffect_4shso"), SubResource("CompositorEffect_2f4hc")])
 
-[sub_resource type="Texture2DRD" id="Texture2DRD_vkdp8"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hbg42"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pi0kv"]
 render_priority = 0
 shader = ExtResource("4_q4r8d")
-shader_parameter/color = SubResource("Texture2DRD_vkdp8")
 
-[sub_resource type="QuadMesh" id="QuadMesh_2k2j8"]
+[sub_resource type="QuadMesh" id="QuadMesh_33nae"]
 
-[sub_resource type="Texture2DRD" id="Texture2DRD_0kwps"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kosel"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_etsjh"]
 render_priority = 0
 shader = ExtResource("4_q4r8d")
-shader_parameter/color = SubResource("Texture2DRD_0kwps")
 
-[sub_resource type="QuadMesh" id="QuadMesh_wxgwy"]
+[sub_resource type="QuadMesh" id="QuadMesh_2koiq"]
 
-[sub_resource type="Texture2DRD" id="Texture2DRD_qbdm0"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qyfyt"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fuanp"]
 render_priority = 0
 shader = ExtResource("4_q4r8d")
-shader_parameter/color = SubResource("Texture2DRD_qbdm0")
 
-[sub_resource type="QuadMesh" id="QuadMesh_i3shc"]
+[sub_resource type="QuadMesh" id="QuadMesh_j33as"]
 
 [node name="BlurComparer" type="Control" unique_id=1833348784 node_paths=PackedStringArray("replayer")]
 layout_mode = 3
@@ -176,6 +164,7 @@ offset_bottom = 506.0
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1909721713]
 own_world_3d = true
 handle_input_locally = false
+render_target_update_mode = 4
 
 [node name="Replayer" type="AnimationPlayer" parent="SubViewportContainer/SubViewport" unique_id=2102459665]
 root_node = NodePath(".")
@@ -270,9 +259,9 @@ render_target_update_mode = 4
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer2/SubViewport" unique_id=819029030]
 
 [node name="FullScreenQuad" type="MeshInstance3D" parent="SubViewportContainer2/SubViewport" unique_id=267818562]
-material_override = SubResource("ShaderMaterial_pi0kv")
+material_override = SubResource("ShaderMaterial_4orhx")
 custom_aabb = AABB(-10000, -10000, -10000, 20000, 20000, 20000)
-mesh = SubResource("QuadMesh_33nae")
+mesh = SubResource("QuadMesh_f8kah")
 script = ExtResource("5_0ru2k")
 metadata/_custom_type_script = "uid://vneumtydxruq"
 
@@ -297,9 +286,9 @@ render_target_update_mode = 4
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer3/SubViewport" unique_id=1199835413]
 
 [node name="FullScreenQuad" type="MeshInstance3D" parent="SubViewportContainer3/SubViewport" unique_id=692378103]
-material_override = SubResource("ShaderMaterial_hbg42")
+material_override = SubResource("ShaderMaterial_pi0kv")
 custom_aabb = AABB(-10000, -10000, -10000, 20000, 20000, 20000)
-mesh = SubResource("QuadMesh_2k2j8")
+mesh = SubResource("QuadMesh_33nae")
 script = ExtResource("5_0ru2k")
 metadata/_custom_type_script = "uid://vneumtydxruq"
 
@@ -323,9 +312,9 @@ render_target_update_mode = 4
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer4/SubViewport" unique_id=1546394921]
 
 [node name="FullScreenQuad" type="MeshInstance3D" parent="SubViewportContainer4/SubViewport" unique_id=2108178683]
-material_override = SubResource("ShaderMaterial_kosel")
+material_override = SubResource("ShaderMaterial_etsjh")
 custom_aabb = AABB(-10000, -10000, -10000, 20000, 20000, 20000)
-mesh = SubResource("QuadMesh_wxgwy")
+mesh = SubResource("QuadMesh_2koiq")
 script = ExtResource("5_0ru2k")
 metadata/_custom_type_script = "uid://vneumtydxruq"
 
@@ -349,9 +338,9 @@ render_target_update_mode = 4
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer5/SubViewport" unique_id=1759957299]
 
 [node name="FullScreenQuad" type="MeshInstance3D" parent="SubViewportContainer5/SubViewport" unique_id=1315584143]
-material_override = SubResource("ShaderMaterial_qyfyt")
+material_override = SubResource("ShaderMaterial_fuanp")
 custom_aabb = AABB(-10000, -10000, -10000, 20000, 20000, 20000)
-mesh = SubResource("QuadMesh_i3shc")
+mesh = SubResource("QuadMesh_j33as")
 script = ExtResource("5_0ru2k")
 metadata/_custom_type_script = "uid://vneumtydxruq"
 
