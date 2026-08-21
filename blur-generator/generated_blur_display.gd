@@ -2,7 +2,11 @@
 class_name GeneratedBlurDisplay
 extends SubViewportContainer
 
-@export var replayer: Replayer
+@export var replayer: Replayer:
+	set(value):
+		replayer = value
+		
+		update_configuration_warnings()
 
 @export_tool_button("copy environment") var ed_copy_environment = copy_environment
 
@@ -59,7 +63,7 @@ func copy_environment() -> void:
 	# at the time of duplication are dangling in view, and the compositor effects from the original viewport
 	# still have effect. Creating a new viewport is necessary.
 	# TODO @sphynx-owner: properly implement a viewport copying method that would capture all relevant properties.
-	var ref_viewport: SubViewport = replayer.get_viewport()
+	var ref_viewport: SubViewport = ReplayUtils.safe_get_viewport(replayer)
 	
 	var new_viewport: SubViewport = SubViewport.new()
 	
@@ -69,7 +73,7 @@ func copy_environment() -> void:
 	
 	add_child(new_viewport)
 	
-	new_viewport.owner = owner
+	#new_viewport.owner = owner
 	
 	# HACK @sphynx-owner: a way to update the SubViewportContainer's size after
 	# adding the viewport as a child. Othewise it stays very small and easily gets culled away.
@@ -106,10 +110,10 @@ func copy_environment() -> void:
 	
 	new_viewport.add_child(new_camera)
 	
-	new_camera.owner = owner
+	#new_camera.owner = owner
 	
 	_full_screen_quad = FullScreenQuad.new()
 	
 	new_viewport.add_child(_full_screen_quad)
 	
-	_full_screen_quad.owner = owner
+	#_full_screen_quad.owner = owner

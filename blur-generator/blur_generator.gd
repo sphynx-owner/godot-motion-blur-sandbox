@@ -82,7 +82,7 @@ func _validate_property(property: Dictionary) -> void:
 
 
 func generate() -> void:
-	var viewport: Viewport = replayer.get_viewport()
+	var viewport: Viewport = ReplayUtils.safe_get_viewport(replayer)
 	
 	var start_position: float = replayer.get_position()
 	
@@ -104,17 +104,18 @@ func generate() -> void:
 		Directionality.TRAILING:
 			time_offset = -1.0
 	
-	var step_offset: float
+	var step_offset: float = 0.0
 	
-	match compositor_blur_directionality:
-		Directionality.CENTERED:
-			step_offset = -0.5
-		
-		Directionality.LEADING:
-			step_offset = -1.0
-		
-		Directionality.TRAILING:
-			step_offset = 0.0
+	if compositor_blur_enabled:
+		match compositor_blur_directionality:
+			Directionality.CENTERED:
+				step_offset = -0.5
+			
+			Directionality.LEADING:
+				step_offset = -1.0
+			
+			Directionality.TRAILING:
+				step_offset = 0.0
 	
 	for i in resolution:
 		# HACK @sphynx-owner: for now using this to reset the first frame and ignore it from the accumulation.
@@ -129,8 +130,6 @@ func generate() -> void:
 		
 		viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 		
-		# HACK @sphynx-owner: seeking twice to force an update.
-		replayer.seek_rep(current_position)
 		replayer.seek_rep(current_position)
 		
 		await RenderingServer.frame_post_draw
@@ -139,35 +138,14 @@ func generate() -> void:
 	
 	viewport.render_target_update_mode = SubViewport.UPDATE_WHEN_VISIBLE
 	
-	# HACK @sphynx-owner: seeking twice to force an update.
-	replayer.seek_rep(start_position)
 	replayer.seek_rep(start_position)
 
 
 func _set_up_compositor() -> void:
-	var viewport: Viewport = replayer.get_viewport()
+	# TODO @sphynx-owner: must make sure that if we copy the environment into a display, that
+	# it's done before we add the blur generator effect.
 	
-	# HACK @sphynx-owner: for some reason, you can get the environment resource and camera
-	# attributes from a viewport, but not the compositor. I suspect it is a feature that no
-	# one got to implement yet.
-	var environment: WorldEnvironment = ReplayUtils.find_environment_recursive(viewport)
-	
-	if !environment:
-		push_error("could not find environment")
-		return
-	
-	if !environment.compositor:
-		environment.compositor = Compositor.new()
-	
-	for compositor_effect in environment.compositor.compositor_effects:
-		if compositor_effect is BlurGeneratorCompositor:
-			return
-	
-	environment.compositor.compositor_effects = environment.compositor.compositor_effects + [BlurGeneratorCompositor.new()]
-	
-	for existing_effect in environment.compositor.compositor_effects:
-		if existing_effect is BlurGeneratorCompositor:
-			effect = existing_effect
+	effect = ReplayUtils.get_or_add_active_compositor_effect(replayer, BlurGeneratorCompositor)
 
 
 # HACK @sphynx-owner: using a very elaborate setup to copy the texture over.
