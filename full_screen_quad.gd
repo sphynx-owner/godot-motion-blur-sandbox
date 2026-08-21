@@ -4,8 +4,17 @@ extends MeshInstance3D
 
 const shader: Shader = preload("res://screen_quad.gdshader")
 
+var texture: Texture2D:
+	set(value):
+		material_override.set_shader_parameter("color", value)
+	
+	get():
+		return material_override.get_shader_parameter("color")
+
 
 func _ready() -> void:
+	mesh = QuadMesh.new()
+	
 	material_override = ShaderMaterial.new()
 	
 	material_override.shader = shader

@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://b2n1fjko785sx"
+path="res://.godot/imported/blur_generator.glsl-c263e1fc5355daa53e4586bc9613dd7a.res"
+
+[deps]
+
+source_file="res://blur-generator/blur_generator.glsl"
+dest_files=["res://.godot/imported/blur_generator.glsl-c263e1fc5355daa53e4586bc9613dd7a.res"]
+
+[params]
+
