@@ -147,7 +147,7 @@ func generate() -> void:
 func _set_up_compositor() -> void:
 	var viewport: Viewport = replayer.get_viewport()
 	
-	# HACK @sphynx-skillcap: for some reason, you can get the environment resource and camera
+	# HACK @sphynx-owner: for some reason, you can get the environment resource and camera
 	# attributes from a viewport, but not the compositor. I suspect it is a feature that no
 	# one got to implement yet.
 	var environment: WorldEnvironment = ReplayUtils.find_environment_recursive(viewport)
@@ -170,11 +170,11 @@ func _set_up_compositor() -> void:
 			effect = existing_effect
 
 
-# HACK @sphynx-skillcap: using a very elaborate setup to copy the texture over.
+# HACK @sphynx-owner: using a very elaborate setup to copy the texture over.
 # I am probably just incompetent, but using effect.texture_2d_rd.get_image() and
 # feeding it to an image texture seems broken, and for me only worked the first time,
 # and generated the same image for following generations.
-# NOTE @sphynx-skillcap: I am basically using the same setup from the blur generator
+# NOTE @sphynx-owner: I am basically using the same setup from the blur generator
 # compositor for generating the render device texture. The only difference is
 # the additional required RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT usage flag
 func _copy_texture() -> void:

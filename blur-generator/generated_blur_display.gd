@@ -54,25 +54,32 @@ func copy_environment() -> void:
 	
 	assert(replayer and replayer.is_replay_loaded(), "replayer must be set and loaded to copy the environment from")
 	
+	# NOTICE @sphynx-owner: I am not using duplicate() on the viewport. It seems to be completely broken,
+	# forcing a snapshot of the entire world onto the new viewport without any way of updating away. Meshes
+	# at the time of duplication are dangling in view, and the compositor effects from the original viewport
+	# still have effect. Creating a new viewport is necessary.
+	# TODO @sphynx-owner: properly implement a viewport copying method that would capture all relevant properties.
 	var ref_viewport: SubViewport = replayer.get_viewport()
 	
-	var ref_camera: Camera3D = ref_viewport.get_camera_3d()
-	
-	var ref_environment: WorldEnvironment = ReplayUtils.find_environment_recursive(ref_viewport)
-	
-	var new_viewport: SubViewport = ref_viewport.duplicate()
+	var new_viewport: SubViewport = SubViewport.new()
 	
 	new_viewport.own_world_3d = true
+	
+	new_viewport.size = ref_viewport.size
 	
 	add_child(new_viewport)
 	
 	new_viewport.owner = owner
 	
-	# HACK @sphynx-skillcap: a way to update the SubViewportContainer's size after
+	# HACK @sphynx-owner: a way to update the SubViewportContainer's size after
 	# adding the viewport as a child. Othewise it stays very small and easily gets culled away.
 	new_viewport.size = new_viewport.size
 	
-	var new_camera: Camera3D = ref_camera.duplicate()
+	var ref_camera: Camera3D = ref_viewport.get_camera_3d()
+	
+	var new_camera: Camera3D = ref_camera.duplicate(DUPLICATE_DEFAULT & ~DUPLICATE_SIGNALS)
+	
+	var ref_environment: WorldEnvironment = ReplayUtils.find_environment_recursive(ref_viewport)
 	
 	# NOTE @sphynx-owner: these properties are equivalent on the _camera and the environment,
 	# but the ones on the _camera take precedence. Since we are only recreating the environment

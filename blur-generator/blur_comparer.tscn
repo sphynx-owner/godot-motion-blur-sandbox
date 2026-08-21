@@ -77,12 +77,12 @@ albedo_texture = ExtResource("12_j33as")
 
 [sub_resource type="Texture2DRD" id="Texture2DRD_4orhx"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4orhx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f8kah"]
 render_priority = 0
 shader = ExtResource("16_f8kah")
 shader_parameter/color = SubResource("Texture2DRD_4orhx")
 
-[sub_resource type="QuadMesh" id="QuadMesh_f8kah"]
+[sub_resource type="QuadMesh" id="QuadMesh_pi0kv"]
 
 [node name="BlurComparer" type="Control" unique_id=1833348784 node_paths=PackedStringArray("replayer")]
 layout_mode = 3
@@ -111,68 +111,68 @@ root_node = NodePath(".")
 script = ExtResource("1_ri01s")
 metadata/_custom_type_script = "uid://bcksmwxwkpkw8"
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/Replayer" unique_id=139412736]
+[node name="@WorldEnvironment@86100" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/Replayer" unique_id=139412736]
 environment = SubResource("Environment_5v3c7")
 camera_attributes = SubResource("CameraAttributesPractical_d5wxy")
 compositor = SubResource("Compositor_5v3c7")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=759137879]
+[node name="@DirectionalLight3D@86101" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=759137879]
 transform = Transform3D(1, 0, 0, 0, 0.35059965, 0.93652546, 0, -0.93652546, 0.35059965, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1559026898]
-transform = Transform3D(-0.9916111, 0.07780041, -0.1032217, 7.450581e-09, 0.7985713, 0.6019003, 0.12925796, 0.59685093, -0.79187214, -3.2361884, 6.988168, -7.1489067)
+[node name="@Camera3D@86102" type="Camera3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1559026898]
+transform = Transform3D(-0.9916111, 0.077800415, -0.10322171, 7.450581e-09, 0.7985713, 0.6019003, 0.12925798, 0.59685093, -0.79187214, -3.2361884, 6.988168, -7.1489067)
 current = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=762995117]
+[node name="@MeshInstance3D@86103" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=762995117]
 mesh = SubResource("PlaneMesh_5h11f")
 surface_material_override/0 = SubResource("StandardMaterial3D_bx8n8")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1330147994]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.902438, 2.44955, 0)
+[node name="@MeshInstance3D@86104" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1330147994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.912546, 2.44955, 0)
 mesh = SubResource("BoxMesh_5h11f")
 
-[node name="_MeshInstance3D_9" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1805778663]
+[node name="@MeshInstance3D@86105" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1805778663]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.006053, 8.649663, -5.747139)
 visible = false
 mesh = SubResource("SphereMesh_mgdjv")
 
-[node name="Spawned" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1895193866]
+[node name="@MeshInstance3D@86106" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=898849174]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8491, 11.876514, 1.6225734)
 visible = false
 mesh = SubResource("SphereMesh_mgdjv")
 
-[node name="_MeshInstance3D_10" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=2082995658]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9172538, -2.9553292, -4.3606625)
+[node name="@MeshInstance3D@86107" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1957280241]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34435835, -1.9553045, -3.1546152)
+mesh = SubResource("SphereMesh_mgdjv")
+
+[node name="@MeshInstance3D@86108" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=860401532]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4720879, 6.9180784, 6.986057)
+mesh = SubResource("SphereMesh_mgdjv")
+
+[node name="@MeshInstance3D@86109" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=635055168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3340342, 4.0453215, 3.7758253)
+mesh = SubResource("SphereMesh_mgdjv")
+
+[node name="@MeshInstance3D@86110" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=885790264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8382328, 2.4013891, 1.8367282)
+mesh = SubResource("SphereMesh_mgdjv")
+
+[node name="@MeshInstance3D@86111" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1878194333]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.129738, 2.7325304, 2.4712663)
 visible = false
 mesh = SubResource("SphereMesh_mgdjv")
 
-[node name="_MeshInstance3D_11" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1817206580]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1513834, 8.449747, 8.63445)
-mesh = SubResource("SphereMesh_mgdjv")
-
-[node name="_MeshInstance3D_12" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=525836087]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7408857, 4.968134, 4.6933613)
-mesh = SubResource("SphereMesh_mgdjv")
-
-[node name="_MeshInstance3D_13" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1380784563]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49028826, 1.7788247, 0.25399423)
-mesh = SubResource("SphereMesh_mgdjv")
-
-[node name="@MeshInstance3D@48456" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1935056724]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.129738, 2.7325304, 2.4712663)
-mesh = SubResource("SphereMesh_mgdjv")
-
-[node name="_MeshInstance3D_14" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=724015824]
+[node name="@MeshInstance3D@86112" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1502591842]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.133571, 2.494004, 2.178424)
 visible = false
 mesh = SubResource("SphereMesh_mgdjv")
 
-[node name="_MeshInstance3D_15" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1402085303]
+[node name="@MeshInstance3D@86113" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=111247328]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1985576, 2.6863978, 2.302925)
 visible = false
 mesh = SubResource("SphereMesh_mgdjv")
 
-[node name="_MeshInstance3D_16" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1947586945]
+[node name="@MeshInstance3D@86114" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=611941134]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1109374, 2.7459743, 2.258987)
 visible = false
 mesh = SubResource("SphereMesh_mgdjv")
@@ -195,19 +195,18 @@ script = ExtResource("17_4orhx")
 replayer = NodePath("../SubViewportContainer/SubViewport/Replayer")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
-[node name="SubViewport" type="SubViewport" parent="GeneratedBlurDisplay" unique_id=300635722]
+[node name="@SubViewport@82269" type="SubViewport" parent="GeneratedBlurDisplay" unique_id=2064861752]
 own_world_3d = true
-handle_input_locally = false
 size = Vector2i(1101, 619)
 
-[node name="Camera3D" type="Camera3D" parent="GeneratedBlurDisplay/SubViewport" unique_id=212051572]
-transform = Transform3D(-0.9916111, 0.07780041, -0.1032217, 7.450581e-09, 0.7985713, 0.6019003, 0.12925796, 0.59685093, -0.79187214, -3.2361884, 6.988168, -7.1489067)
+[node name="Camera3D" type="Camera3D" parent="GeneratedBlurDisplay/@SubViewport@82269" unique_id=979224328]
+transform = Transform3D(-0.9916111, 0.07780041, -0.1032217, 1.1175871e-08, 0.7985713, 0.6019003, 0.12925798, 0.59685093, -0.79187214, -3.2361884, 6.988168, -7.1489067)
 environment = SubResource("Environment_5v3c7")
 attributes = SubResource("CameraAttributesPractical_d5wxy")
 current = true
 
-[node name="@MeshInstance3D@46764" type="MeshInstance3D" parent="GeneratedBlurDisplay/SubViewport" unique_id=1695862302]
-material_override = SubResource("ShaderMaterial_4orhx")
+[node name="@MeshInstance3D@82270" type="MeshInstance3D" parent="GeneratedBlurDisplay/@SubViewport@82269" unique_id=854941444]
+material_override = SubResource("ShaderMaterial_f8kah")
 custom_aabb = AABB(-10000, -10000, -10000, 20000, 20000, 20000)
-mesh = SubResource("QuadMesh_f8kah")
+mesh = SubResource("QuadMesh_pi0kv")
 script = ExtResource("17_pi0kv")
