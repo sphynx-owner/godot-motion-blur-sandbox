@@ -22,7 +22,7 @@ enum Directionality{CENTERED, LEADING, TRAILING}
 
 @export var replayer: Replayer
 
-@export var full_screen_quad: FullScreenQuad
+@export var display: GeneratedBlurDisplay
 
 @export_range(1, 1000, 0, "or_greater") var resolution: int = 30
 
@@ -164,10 +164,10 @@ func _copy_texture() -> void:
 	
 	var temp_texture: RID
 	
-	if !full_screen_quad.texture or full_screen_quad.texture.get_size() != effect.texture_2d_rd.get_size():
+	if !display.texture or display.texture.get_size() != effect.texture_2d_rd.get_size():
 		print("blur generator created new texture")
 		
-		full_screen_quad.texture = Texture2DRD.new()
+		display.texture = Texture2DRD.new()
 		
 		var texture_format := RDTextureFormat.new()
 		
@@ -194,10 +194,10 @@ func _copy_texture() -> void:
 		# texture_rd_rid, since it seems to clash with godot's rendering pipeline otherwise
 		await RenderingServer.frame_post_draw
 		
-		full_screen_quad.texture.texture_rd_rid = temp_texture
+		display.texture.texture_rd_rid = temp_texture
 		
 		# free the old texture if there was one
 		if old_texture.is_valid():
 			rd.free_rid(old_texture)
 	
-	rd.texture_copy(effect.texture, RenderingServer.texture_get_rd_texture(full_screen_quad.texture.get_rid()), Vector3.ZERO, Vector3.ZERO, Vector3(tex_size.x, tex_size.y, 1), 0, 0, 0, 0)
+	rd.texture_copy(effect.texture, RenderingServer.texture_get_rd_texture(display.texture.get_rid()), Vector3.ZERO, Vector3.ZERO, Vector3(tex_size.x, tex_size.y, 1), 0, 0, 0, 0)
