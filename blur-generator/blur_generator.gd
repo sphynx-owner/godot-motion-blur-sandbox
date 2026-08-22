@@ -11,14 +11,6 @@ enum Directionality{CENTERED, LEADING, TRAILING}
 # Then, the blur generator would work directly with each camera. However, it means that I would have to
 # have all cameras follow the same position, and share the same world.
 
-# TODO @sphynx-owner: account for centered blur compositor effect. This means that to approximately replicate the
-# same motion range, the step would have to be offset by half. Weirdly enough, if non-centered blur is involved, 
-# the offset would have to be in the opposite direction to the direction of the blur.
-# I would need a separate property for the compositor blur centered-ness, and the centered-ness of the generated
-# accumulation blur.
-
-# TODO @sphynx-owner: automatically account for when compositor blur is enabled, and add an additional iteration
-# at the start to move from into the first position.
 
 @export var replayer: Replayer:
 	set(value):
@@ -26,38 +18,30 @@ enum Directionality{CENTERED, LEADING, TRAILING}
 		
 		update_configuration_warnings()
 
-@export var display: GeneratedBlurDisplay:
+@export var generation_presets: Array[BlurGenerationPreset]:
 	set(value):
-		display = value
+		generation_presets = value
 		
 		update_configuration_warnings()
 
-@export_range(2, 1000, 1, "or_greater") var resolution: int = 30
-
-@export var framerate: int = 30
-
-@export var accumulation_directionality: Directionality = Directionality.CENTERED
-
-# TODO @sphynx-owner: consider making this automatically detected.
-@export var compositor_blur_enabled: bool = false:
+@export var displays: Array[GeneratedBlurDisplay]:
 	set(value):
-		compositor_blur_enabled = value
+		displays = value
 		
-		notify_property_list_changed()
-
-@export var compositor_blur_directionality: Directionality = Directionality.CENTERED
+		update_configuration_warnings()
 
 @export_tool_button("generate") var editor_generate = _editor_generate
 
 var rd: RenderingDevice
 
-var effect: BlurGeneratorCompositor
-
+#region Tool Button Methods
 
 func _editor_generate() -> void:
-	_set_up_compositor()
-	generate()
+	generate_all()
 
+#endregion
+
+#region Virtual Methods
 
 func _ready() -> void:
 	rd = RenderingServer.get_rendering_device()
@@ -69,32 +53,41 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if !replayer:
 		ret.append("replayer must be set")
 	
-	if !display:
-		ret.append("display must be set")
+	if generation_presets.is_empty():
+		ret.append("no generation presets configured")
+	
+	if generation_presets.size() > displays.size():
+		ret.append("not enough displays provided, must at least match the amount of configured generation presets")
 	
 	return ret
 
+#endregion
 
-func _validate_property(property: Dictionary) -> void:
-	if property.name == "compositor_blur_directionality":
-		if !compositor_blur_enabled:
-			property.usage &= ~PROPERTY_USAGE_EDITOR
+#region Public Methods
+
+func generate_all() -> void:
+	for i in generation_presets.size():
+		var preset: BlurGenerationPreset = generation_presets[i]
+		
+		var display: GeneratedBlurDisplay = displays[i]
+		
+		await generate(preset, display)
 
 
-func generate() -> void:
+func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> void:
+	display.copy_environment_from_replay(replayer)
+	
 	var viewport: Viewport = ReplayUtils.safe_get_viewport(replayer)
 	
 	var start_position: float = replayer.get_position()
 	
-	effect.current_accumulation = 1
+	var time_range: float = 1.0 / preset.framerate
 	
-	var time_range: float = 1.0 / framerate
-	
-	var step_size: float = 0.0 if resolution == 1 else time_range / float(resolution - 1)
+	var step_size: float = 0.0 if preset.resolution == 1 else time_range / float(preset.resolution - 1)
 	
 	var time_offset: float
 	
-	match accumulation_directionality:
+	match preset.accumulation_directionality:
 		Directionality.CENTERED:
 			time_offset = -0.5
 		
@@ -106,8 +99,8 @@ func generate() -> void:
 	
 	var step_offset: float = 0.0
 	
-	if compositor_blur_enabled:
-		match compositor_blur_directionality:
+	if preset.custom_compositor:
+		match preset.custom_compositor_directionality:
 			Directionality.CENTERED:
 				step_offset = -0.5
 			
@@ -117,16 +110,20 @@ func generate() -> void:
 			Directionality.TRAILING:
 				step_offset = 0.0
 	
-	var motion_blur_effect: MotionBlurCompositorEffect = ReplayUtils.get_or_add_active_compositor_effect(replayer, MotionBlurCompositorEffect)
+	if preset.custom_compositor:
+		ReplayUtils.set_active_compositor(replayer, preset.custom_compositor.duplicate(true))
+		
+	else:
+		ReplayUtils.set_active_compositor(replayer, null)
 	
-	motion_blur_effect.enabled = compositor_blur_enabled
+	var effect: CompositorEffect = ReplayUtils.get_or_add_active_compositor_effect(replayer, BlurGeneratorCompositor)
 	
-	motion_blur_effect.samples = 32
+	effect.current_accumulation = 1
 	
-	for i in resolution:
+	for i in preset.resolution:
 		# HACK @sphynx-owner: for now using this to reset the first frame and ignore it from the accumulation.
 		# This is to use motion blurred subframes when accumulating.
-		if compositor_blur_enabled and i == 1:
+		if preset.custom_compositor and i == 1:
 			effect.current_accumulation = 1
 		
 		# NOTE @sphynx-owner: resolution - 1 is used to ensure the final position is at
@@ -140,19 +137,15 @@ func generate() -> void:
 		
 		await RenderingServer.frame_post_draw
 	
-	_copy_texture()
+	await _copy_blur_generator_compositor_result(effect, display)
 	
 	viewport.render_target_update_mode = SubViewport.UPDATE_WHEN_VISIBLE
 	
 	replayer.seek_rep(start_position)
 
+#endregion
 
-func _set_up_compositor() -> void:
-	# TODO @sphynx-owner: must make sure that if we copy the environment into a display, that
-	# it's done before we add the blur generator effect.
-	
-	effect = ReplayUtils.get_or_add_active_compositor_effect(replayer, BlurGeneratorCompositor)
-
+#region Private Methods
 
 # HACK @sphynx-owner: using a very elaborate setup to copy the texture over.
 # I am probably just incompetent, but using effect.texture_2d_rd.get_image() and
@@ -161,14 +154,12 @@ func _set_up_compositor() -> void:
 # NOTE @sphynx-owner: I am basically using the same setup from the blur generator
 # compositor for generating the render device texture. The only difference is
 # the additional required RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT usage flag
-func _copy_texture() -> void:
+func _copy_blur_generator_compositor_result(effect: CompositorEffect, display: GeneratedBlurDisplay) -> void:
 	var tex_size: Vector2i = effect.texture_2d_rd.get_size()
 	
 	var temp_texture: RID
 	
-	if !display.texture or display.texture.get_size() != effect.texture_2d_rd.get_size():
-		print("blur generator created new texture")
-		
+	if !display.texture or Vector2i(display.texture.get_size()) != tex_size:
 		display.texture = Texture2DRD.new()
 		
 		var texture_format := RDTextureFormat.new()
@@ -203,3 +194,5 @@ func _copy_texture() -> void:
 			rd.free_rid(old_texture)
 	
 	rd.texture_copy(effect.texture, RenderingServer.texture_get_rd_texture(display.texture.get_rid()), Vector3.ZERO, Vector3.ZERO, Vector3(tex_size.x, tex_size.y, 1), 0, 0, 0, 0)
+
+#endregion
