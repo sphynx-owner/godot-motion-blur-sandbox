@@ -11,7 +11,7 @@ extends Control
 
 
 func _load_replay() -> void:
-	replayer.load_replay(load("res://addons/sphynx-replay-tool/temp/temp_scene_record.tres"))
+	await replayer.load_replay(load("res://addons/sphynx-replay-tool/temp/temp_scene_record.tres"))
 
 
 func _unload_replay() -> void:

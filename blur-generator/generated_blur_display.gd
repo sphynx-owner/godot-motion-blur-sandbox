@@ -2,22 +2,22 @@
 class_name GeneratedBlurDisplay
 extends SubViewportContainer
 
-var texture: Texture2D:
-	set(value):
-		if !_full_screen_quad:
-			push_error("trying to set texture of blur display but missing full screen quad")
-			return
-		
-		_full_screen_quad.texture = value
-	
-	get():
-		if !_full_screen_quad:
-			push_error("trying to get texture of blur display but missing full screen quad")
-			return null
-		
-		return _full_screen_quad.texture
+var texture_rid: RID
+
+var texture: Texture2DRD = Texture2DRD.new()
 
 var _full_screen_quad: FullScreenQuad
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		var rd: RenderingDevice = RenderingServer.get_rendering_device()
+		
+		if !rd:
+			return
+		
+		if texture_rid.is_valid():
+			rd.free_rid(texture_rid)
 
 
 func clear_environment() -> void:
@@ -76,5 +76,7 @@ func copy_environment_from_replay(replayer: Replayer) -> void:
 	_full_screen_quad = FullScreenQuad.new()
 	
 	new_viewport.add_child(_full_screen_quad)
+	
+	_full_screen_quad.texture = texture
 	
 	#_full_screen_quad.owner = owner
