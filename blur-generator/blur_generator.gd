@@ -75,6 +75,8 @@ func generate_all() -> void:
 
 
 func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> void:
+	display.preset_name = preset.name
+	
 	display.copy_environment_from_replay(replayer)
 	
 	var viewport: Viewport = ReplayUtils.safe_get_viewport(replayer)

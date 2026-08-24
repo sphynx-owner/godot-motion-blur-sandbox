@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://1widfvi3aeir"]
+
+[ext_resource type="Material" uid="uid://bddwtc61668pi" path="res://benchmarks/race_track/assets/track_1_material.tres" id="1_erjct"]
+
+[node name="TrackCSGPolygon" type="CSGPolygon3D" unique_id=1060317493]
+visible = false
+material_override = ExtResource("1_erjct")
+use_collision = true
+polygon = PackedVector2Array(-50, 0, -50, 1, 0, 1, 50, 1, 50, 0, 0, 0)
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 1
+path_interval = 0.01
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 10.0
+path_joined = true

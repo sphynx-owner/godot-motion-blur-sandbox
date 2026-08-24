@@ -2,11 +2,28 @@
 class_name GeneratedBlurDisplay
 extends SubViewportContainer
 
+var preset_name: String:
+	set(value):
+		_preset_name_label.text = value
+	
+	get():
+		return _preset_name_label.text
+
 var texture_rid: RID
 
 var texture: Texture2DRD = Texture2DRD.new()
 
+var _preset_name_label: Label
+
 var _full_screen_quad: FullScreenQuad
+
+
+func _ready() -> void:
+	_preset_name_label = Label.new()
+	
+	_preset_name_label.add_theme_font_size_override("font_size", 30)
+	
+	add_child(_preset_name_label)
 
 
 func _notification(what: int) -> void:
@@ -22,6 +39,9 @@ func _notification(what: int) -> void:
 
 func clear_environment() -> void:
 	for child in get_children():
+		if child == _preset_name_label:
+			continue
+		
 		remove_child(child)
 		child.queue_free()
 	

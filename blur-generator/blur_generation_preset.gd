@@ -2,6 +2,8 @@
 class_name BlurGenerationPreset
 extends Resource
 
+@export var name: String
+
 ## The framerate to emulate. Lower framerate means larger slice of time being
 ## accumulated over.
 @export var framerate: int = 30

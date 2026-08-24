@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://bcksmwxwkpkw8" path="res://addons/sphynx-replay-tool/classes/replayer.gd" id="1_ri01s"]
 [ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="3_2f4hc"]
 [ext_resource type="Script" uid="uid://clxyfxkllajvu" path="res://blur-generator/blur_generator.gd" id="3_mapp4"]
-[ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="4_0ru2k"]
 [ext_resource type="RDShaderFile" uid="uid://bn88jkvr17x4j" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max.glsl" id="4_4orhx"]
 [ext_resource type="Script" uid="uid://2v8fkru312eu" path="res://blur-generator/blur_generation_preset.gd" id="4_dd3du"]
 [ext_resource type="RDShaderFile" uid="uid://i6rnwhmss334" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_overlay.glsl" id="5_f8kah"]
@@ -12,61 +11,13 @@
 [ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="7_33nae"]
 [ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="8_etsjh"]
 [ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="9_2koiq"]
-[ext_resource type="RDShaderFile" uid="uid://dyxn6g5gvoge7" path="res://addons/easy-compositor/debug/shader_stages/debug_overlay.glsl" id="10_4fu8a"]
-[ext_resource type="Texture2D" uid="uid://cnfwl8040q4mt" path="res://icon.svg" id="13_4shso"]
 [ext_resource type="Script" uid="uid://7iqb4ur7xgki" path="res://blur-generator/generated_blur_display.gd" id="17_4orhx"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4fu8a"]
-ground_bottom_color = Color(0.7907238, 0.73137456, 0.6657407, 1)
-
-[sub_resource type="Sky" id="Sky_2f4hc"]
-sky_material = SubResource("ProceduralSkyMaterial_4fu8a")
-
-[sub_resource type="Environment" id="Environment_4orhx"]
-background_mode = 2
-sky = SubResource("Sky_2f4hc")
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_f8kah"]
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_33nae"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = true
-needs_normal_roughness = false
-script = ExtResource("7_33nae")
-samples = 4
-debug = true
-metadata/_custom_type_script = "uid://c5jewnyvlca7j"
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_etsjh"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("4_0ru2k")
-debug = true
-metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
-
-[sub_resource type="Compositor" id="Compositor_2koiq"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_33nae"), SubResource("CompositorEffect_etsjh")])
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_fuanp"]
-size = Vector2(10, 10)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j33as"]
-albedo_texture = ExtResource("13_4shso")
-
-[sub_resource type="BoxMesh" id="BoxMesh_wybdw"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_4shso"]
 
 [sub_resource type="Resource" id="Resource_xv8vq"]
 script = ExtResource("4_dd3du")
+name = "Ground Truth"
 framerate = 60
+resolution = 60
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_pi0kv"]
@@ -77,6 +28,7 @@ effect_callback_type = 4
 needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("7_33nae")
+clamp_velocities_to_tile = true
 samples = 4
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
@@ -85,6 +37,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0k
 
 [sub_resource type="Resource" id="Resource_4orhx"]
 script = ExtResource("4_dd3du")
+name = "Guertin-Sphynx blur"
 framerate = 60
 resolution = 2
 custom_compositor = SubResource("Compositor_f8kah")
@@ -98,118 +51,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dd3du")
-replayer = NodePath("SubViewportContainer/SubViewport/Replayer")
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=845827005]
-layout_mode = 0
-offset_left = 516.0
-offset_top = 3.0
-offset_right = 1617.0
-offset_bottom = 622.0
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1909721713]
-own_world_3d = true
-handle_input_locally = false
-size = Vector2i(1152, 648)
-render_target_update_mode = 4
-
-[node name="Replayer" type="AnimationPlayer" parent="SubViewportContainer/SubViewport" unique_id=2102459665]
-root_node = NodePath(".")
-script = ExtResource("1_ri01s")
-metadata/_custom_type_script = "uid://bcksmwxwkpkw8"
-
-[node name="@WorldEnvironment@159415" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/Replayer" unique_id=139412736]
-environment = SubResource("Environment_4orhx")
-camera_attributes = SubResource("CameraAttributesPractical_f8kah")
-compositor = SubResource("Compositor_2koiq")
-
-[node name="@DirectionalLight3D@159416" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=759137879]
-transform = Transform3D(1, 0, 0, 0, 0.35059965, 0.93652546, 0, -0.93652546, 0.35059965, 0, 0, 0)
-
-[node name="@Camera3D@159417" type="Camera3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1559026898]
-transform = Transform3D(-0.9999808, -0.0015677491, 0.0059982133, 0, 0.9674991, 0.2528746, -0.0061997096, 0.25286973, -0.96748054, -3.3607264, 3.4109478, -3.5445268)
-current = true
-
-[node name="@MeshInstance3D@159418" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=762995117]
-mesh = SubResource("PlaneMesh_fuanp")
-surface_material_override/0 = SubResource("StandardMaterial3D_j33as")
-
-[node name="@MeshInstance3D@159419" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1330147994]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0637865, 2.44955, 0)
-mesh = SubResource("BoxMesh_wybdw")
-
-[node name="@MeshInstance3D@159420" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1805778663]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3133163, 4.254665, -3.5309393)
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159421" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1059208107]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7789547, 6.9843493, 0.15499628)
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159422" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=685570403]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7198284, 4.618809, 3.3963723)
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159423" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1389624138]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033486307, 4.153301, 2.5692005)
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159424" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1754439462]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2720182, 2.5953088, 2.3340478)
-visible = false
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159425" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1409360650]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.278756, 2.6310093, 2.29291)
-visible = false
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159426" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=663225517]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3179898, 2.6552107, 2.3687553)
-visible = false
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159427" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=846443860]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.248277, 2.6051028, 2.2832897)
-visible = false
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159428" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=281250424]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3266406, 2.5783205, 2.4050791)
-visible = false
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159429" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1527270374]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1841958, 2.6186018, 2.409394)
-visible = false
-mesh = SubResource("SphereMesh_4shso")
-
-[node name="@MeshInstance3D@159430" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Replayer" unique_id=1565640334]
-visible = false
-mesh = SubResource("SphereMesh_4shso")
+replayer = NodePath("HBoxContainer/SubViewportContainer/SubViewport/Replayer")
 
 [node name="BlurGenerator" type="Node" parent="." unique_id=729429633 node_paths=PackedStringArray("replayer", "displays")]
 physics_interpolation_mode = 2
 script = ExtResource("3_mapp4")
-replayer = NodePath("../SubViewportContainer/SubViewport/Replayer")
+replayer = NodePath("../HBoxContainer/SubViewportContainer/SubViewport/Replayer")
 generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"), SubResource("Resource_4orhx")])
-displays = [NodePath("../GeneratedBlurDisplay"), NodePath("../GeneratedBlurDisplay2")]
+displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay2")]
 metadata/_custom_type_script = "uid://clxyfxkllajvu"
 
-[node name="GeneratedBlurDisplay" type="SubViewportContainer" parent="." unique_id=1399594282]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1392330244]
 layout_mode = 0
-offset_left = -585.0
-offset_top = 3.0
-offset_right = 516.0
-offset_bottom = 622.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer" unique_id=845827005]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/SubViewportContainer" unique_id=1909721713]
+own_world_3d = true
+handle_input_locally = false
+msaa_3d = 1
+texture_mipmap_bias = -1.0
+anisotropic_filtering_level = 3
+size = Vector2i(856, 482)
+render_target_update_mode = 4
+
+[node name="Replayer" type="AnimationPlayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=2102459665]
+root_node = NodePath(".")
+script = ExtResource("1_ri01s")
+metadata/_custom_type_script = "uid://bcksmwxwkpkw8"
+
+[node name="GeneratedBlurDisplay" type="SubViewportContainer" parent="HBoxContainer" unique_id=1399594282]
+layout_mode = 2
 script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
-[node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="." unique_id=1581164363]
-layout_mode = 0
-offset_left = -585.0
-offset_top = 3.0
-offset_right = 516.0
-offset_bottom = 622.0
+[node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="HBoxContainer" unique_id=1581164363]
+layout_mode = 2
 script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"

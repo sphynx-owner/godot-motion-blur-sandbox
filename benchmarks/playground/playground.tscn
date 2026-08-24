@@ -59,6 +59,10 @@ size = Vector2(10, 10)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bx8n8"]
 albedo_texture = ExtResource("3_o1hov")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2wl8"]
+albedo_texture = ExtResource("3_o1hov")
+uv1_scale = Vector3(10, 10, 10)
+
 [sub_resource type="BoxMesh" id="BoxMesh_5h11f"]
 
 [node name="Playground" type="Node3D" unique_id=906616437]
@@ -94,7 +98,8 @@ mesh = SubResource("PlaneMesh_5h11f")
 surface_material_override/0 = SubResource("StandardMaterial3D_bx8n8")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1330147994]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.44955, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0019159, 2.44955, 0)
+material_override = SubResource("StandardMaterial3D_v2wl8")
 mesh = SubResource("BoxMesh_5h11f")
 script = ExtResource("4_wnnsp")
 
@@ -105,4 +110,3 @@ timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="Spawner" unique_id=818856384]
 wait_time = 0.5
-autostart = true
