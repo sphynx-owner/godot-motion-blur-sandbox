@@ -1,0 +1,494 @@
+[gd_resource type="Resource" script_class="SceneRecord" format=3 uid="uid://b0mk0s80rys6f"]
+
+[ext_resource type="Script" uid="uid://dq3pdgokm34yq" path="res://addons/sphynx-replay-tool/classes/node_record.gd" id="1_v2i33"]
+[ext_resource type="Script" uid="uid://bghujlaljsoqw" path="res://addons/sphynx-replay-tool/classes/captures/node_capture.gd" id="2_0r325"]
+[ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="3_d1gxu"]
+[ext_resource type="RDShaderFile" uid="uid://bn88jkvr17x4j" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max.glsl" id="4_0ws7t"]
+[ext_resource type="RDShaderFile" uid="uid://i6rnwhmss334" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_overlay.glsl" id="5_e6mhh"]
+[ext_resource type="RDShaderFile" uid="uid://bxoh2vy6m4s83" path="res://addons/godot-motion-blur/pre_blur_processing/shader_stages/pre_blur_processor.glsl" id="6_fybg3"]
+[ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="7_ittcm"]
+[ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="8_iylec"]
+[ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="9_2n80g"]
+[ext_resource type="RDShaderFile" uid="uid://dyxn6g5gvoge7" path="res://addons/easy-compositor/debug/shader_stages/debug_overlay.glsl" id="10_lfiq3"]
+[ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="11_y4p05"]
+[ext_resource type="Script" uid="uid://dj1nucyttiasg" path="res://addons/sphynx-replay-tool/classes/captures/node_3d_capture.gd" id="12_x3ytk"]
+[ext_resource type="Script" uid="uid://cqel2pdrnuolt" path="res://camera_3d.gd" id="13_18wa6"]
+[ext_resource type="Texture2D" uid="uid://cnfwl8040q4mt" path="res://icon.svg" id="14_58qop"]
+[ext_resource type="Script" uid="uid://br6rroh08c1wk" path="res://benchmarks/playground/mesh_instance_3d_2.gd" id="15_jbcjp"]
+[ext_resource type="Script" uid="uid://ctxi48q38nwdf" path="res://benchmarks/playground/spawned.gd" id="16_kejrh"]
+[ext_resource type="Script" uid="uid://dc4tnwdmnvtir" path="res://addons/sphynx-replay-tool/classes/scene_record.gd" id="17_flwcl"]
+[ext_resource type="Resource" uid="uid://bihpw7q0nqj66" path="res://addons/sphynx-replay-tool/resources/default_settings.tres" id="18_q3co7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4fh6k"]
+ground_bottom_color = Color(0.7907238, 0.73137456, 0.6657407, 1)
+
+[sub_resource type="Sky" id="Sky_aa0ni"]
+sky_material = SubResource("ProceduralSkyMaterial_4fh6k")
+
+[sub_resource type="Environment" id="Environment_5v3c7"]
+background_mode = 2
+sky = SubResource("Sky_aa0ni")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_d5wxy"]
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_o1hov"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = true
+needs_normal_roughness = false
+script = ExtResource("7_ittcm")
+samples = 4
+debug = true
+metadata/_custom_type_script = "uid://c5jewnyvlca7j"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_7x4fh"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("11_y4p05")
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_5v3c7"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_o1hov"), SubResource("CompositorEffect_7x4fh")])
+
+[sub_resource type="PackedScene" id="PackedScene_gtvnt"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("WorldEnvironment", "environment", "camera_attributes", "compositor"),
+"node_count": 1,
+"node_ids": PackedInt32Array(139412736),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 0, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0),
+"variants": [SubResource("Environment_5v3c7"), SubResource("CameraAttributesPractical_d5wxy"), SubResource("Compositor_5v3c7")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_wl0bj"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("2_0r325")
+node_capture = SubResource("PackedScene_gtvnt")
+node_initial_state = null
+despawn_time = 3.884
+
+[sub_resource type="PackedScene" id="PackedScene_3s5hx"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("DirectionalLight3D", "transform"),
+"node_count": 1,
+"node_ids": PackedInt32Array(759137879),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 0, 0, -1, 1, 1, 0, 0),
+"variants": [Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_cccpe"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_3s5hx")
+node_initial_state = Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)
+despawn_time = 3.884
+times = Array[float]([0.00199999999999977, 3.849])
+states = [Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0), Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)]
+
+[sub_resource type="PackedScene" id="PackedScene_gbxs4"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("Camera3D", "transform", "current", "script", "initial_mouse_mode"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1559026898),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 0, 0, -1, 4, 1, 0, 2, 1, 3, 2, 4, 3, 0),
+"variants": [Transform3D(-0.99101263, -0.085353166, 0.10299895, 0, 0.7699805, 0.6380674, -0.13376826, 0.63233286, -0.7630604, 0.67239845, 7.1323824, -9.051521), true, ExtResource("13_18wa6"), 0],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_arbte"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_gbxs4")
+node_initial_state = Transform3D(-0.99101263, -0.085353166, 0.10299895, 0, 0.7699805, 0.6380674, -0.13376826, 0.63233286, -0.7630604, 0.67239845, 7.1323824, -9.051521)
+despawn_time = 3.884
+times = Array[float]([0.00199999999999977, 0.5040000000000004, 0.5499999999999998, 0.5990000000000002, 0.649, 0.7000000000000002, 0.7489999999999997, 0.7990000000000004, 0.8490000000000002, 0.899, 0.9500000000000002, 0.9989999999999996, 1.0490000000000004, 1.101, 1.149, 1.2000000000000002, 1.2489999999999997, 1.2990000000000004, 1.3490000000000002, 1.399, 1.4489999999999998, 1.649000000000001, 1.6989999999999998, 1.7490000000000006, 1.7989999999999997, 1.849, 1.899000000000001, 1.949, 1.9990000000000008, 2.0489999999999995, 2.099, 2.149000000000001, 2.199, 2.249000000000001, 3.849])
+states = [Transform3D(-0.99101263, -0.085353166, 0.10299895, 0, 0.7699805, 0.6380674, -0.13376826, 0.63233286, -0.7630604, 0.67239845, 7.1323824, -9.051521), Transform3D(-0.99101263, -0.085353166, 0.10299895, 0, 0.7699805, 0.6380674, -0.13376826, 0.63233286, -0.7630604, 0.67239845, 7.1323824, -9.051521), Transform3D(-0.97558266, -0.11848614, 0.18493108, 0, 0.84200203, 0.5394743, -0.21963258, 0.5263018, -0.8214426, 0.67239845, 7.1323824, -9.051521), Transform3D(-0.93956834, -0.13732605, 0.31361264, 0, 0.916028, 0.40111426, -0.34236142, 0.37687427, -0.8606709, 0.67239845, 7.1323824, -9.051521), Transform3D(-0.86584353, -0.15167841, 0.47676897, 0, 0.95293784, 0.3031659, -0.5003149, 0.26249424, -0.82509506, 0.67239845, 7.1323824, -9.051521), Transform3D(-0.7658104, -0.14809583, 0.6257812, 0, 0.97312057, 0.2302963, -0.64306647, 0.17636329, -0.74522585, 0.67239845, 7.1323824, -9.051521), Transform3D(-0.7190863, -0.1442589, 0.6797825, 0, 0.9782159, 0.20759042, -0.6949208, 0.14927544, -0.7034216, 0.67239845, 7.1323824, -9.051521), Transform3D(-0.71503115, -0.14512491, 0.68386346, 0, 0.9782158, 0.20759042, -0.69909257, 0.14843361, -0.69945484, 0.67239845, 7.1323824, -9.051521), Transform3D(-0.72311676, -0.14338806, 0.67567897, 0, 0.9782158, 0.20759042, -0.69072586, 0.1501121, -0.70736426, 0.3785349, 7.042643, -8.747439), Transform3D(-0.74289984, -0.14657114, 0.653159, 0, 0.97573423, 0.21895812, -0.6694026, 0.16266395, -0.7248728, -0.49021003, 6.7709665, -7.823723), Transform3D(-0.77691525, -0.14499567, 0.6126818, 0, 0.97312057, 0.2302962, -0.62960523, 0.17892061, -0.7560322, -1.3199286, 6.482101, -6.8699613), Transform3D(-0.8222663, -0.13749702, 0.5522434, 0, 0.9703752, 0.24160306, -0.569103, 0.19866204, -0.7979068, -2.431149, 6.238295, -6.441835), Transform3D(-0.8881815, -0.1187796, 0.44387504, 0, 0.96601087, 0.25850156, -0.4594928, 0.2295963, -0.857993, -3.6806593, 6.0115685, -6.1821456), Transform3D(-0.9578839, -0.08066483, 0.27559334, 0, 0.95973426, 0.28090957, -0.28715587, 0.26907876, -0.91931397, -4.878806, 5.7693686, -5.752694), Transform3D(-0.9986102, -0.016561434, 0.050034694, 0, 0.949346, 0.31423268, -0.05270438, 0.3137959, -0.9480266, -5.9616027, 5.501556, -5.0956006), Transform3D(-0.9858634, 0.059082393, -0.1567887, 0, 0.93576556, 0.35262284, 0.16755126, 0.3476379, -0.922537, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.9229053, 0.1523851, -0.35358813, 0, 0.9183464, 0.39577767, 0.385027, 0.36526534, -0.84754676, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.8691035, 0.2036614, -0.45075622, 0, 0.9112992, 0.41174468, 0.4946303, 0.35784873, -0.79201335, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.82924575, 0.2271506, -0.5106409, 0, 0.9136793, 0.40643594, 0.5588842, 0.33703524, -0.7576647, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.8160171, 0.23185469, -0.5294899, 0, 0.91602844, 0.4011134, 0.5780278, 0.3273154, -0.7474949, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.81264067, 0.23375486, -0.5338294, 0, 0.91602844, 0.40111336, 0.5827651, 0.32596102, -0.744402, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.81264067, 0.23375486, -0.5338294, 0, 0.91602844, 0.40111336, 0.5827651, 0.32596102, -0.744402, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.8259814, 0.22309867, -0.51766956, 0, 0.9183465, 0.39577734, 0.5636974, 0.3269047, -0.7585371, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.82924694, 0.221193, -0.5132477, 0, 0.9183465, 0.39577737, 0.5588824, 0.32819715, -0.76153606, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.82924694, 0.221193, -0.5132477, 0, 0.9183465, 0.39577737, 0.5588824, 0.32819715, -0.76153606, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.8356937, 0.22028978, -0.50307906, 0, 0.91602844, 0.40111333, 0.5491959, 0.33520788, -0.7655192, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.8388748, 0.22412252, -0.4960425, 0, 0.9112994, 0.4117444, 0.5443244, 0.345402, -0.7644661, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.85736084, 0.22008526, -0.4652901, 0, 0.9039747, 0.42758596, 0.51471585, 0.36659545, -0.7750325, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.8603409, 0.22062573, -0.45949748, 0, 0.90147185, 0.4328378, 0.5097192, 0.37238806, -0.7755731, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.8603409, 0.22062573, -0.45949748, 0, 0.90147185, 0.4328378, 0.5097192, 0.37238806, -0.7755731, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.8803801, 0.20528142, -0.42754, 0, 0.90147185, 0.43283772, 0.47426882, 0.3810617, -0.7936379, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.90149266, 0.18732972, -0.39015195, 0, 0.90147185, 0.43283775, 0.43279436, 0.39020002, -0.8126703, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.9160482, 0.17359744, -0.36155167, 0, 0.90147185, 0.43283775, 0.40106818, 0.39650023, -0.8257917, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.9229084, 0.16665097, -0.34708425, 0, 0.90147185, 0.43283772, 0.3850195, 0.39946958, -0.831976, -7.2559032, 5.501556, -5.0684624), Transform3D(-0.9229084, 0.16665097, -0.34708425, 0, 0.90147185, 0.43283772, 0.3850195, 0.39946958, -0.831976, -7.2559032, 5.501556, -5.0684624)]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5h11f"]
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bx8n8"]
+albedo_texture = ExtResource("14_58qop")
+
+[sub_resource type="PackedScene" id="PackedScene_qg5mu"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("MeshInstance3D", "mesh", "surface_material_override/0"),
+"node_count": 1,
+"node_ids": PackedInt32Array(762995117),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 0, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("PlaneMesh_5h11f"), SubResource("StandardMaterial3D_bx8n8")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_00vmd"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_qg5mu")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+despawn_time = 3.884
+times = Array[float]([0.00199999999999977, 3.849])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2wl8"]
+albedo_texture = ExtResource("14_58qop")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5h11f"]
+
+[sub_resource type="PackedScene" id="PackedScene_fhga4"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("MeshInstance3D2", "transform", "material_override", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1330147994),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 5, 0, -1, 4, 1, 0, 2, 1, 3, 2, 4, 3, 0),
+"variants": [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9081244, 2.44955, 0), SubResource("StandardMaterial3D_v2wl8"), SubResource("BoxMesh_5h11f"), ExtResource("15_jbcjp")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_fcrys"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_fhga4")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9081244, 2.44955, 0)
+despawn_time = 3.884
+times = Array[float]([0.00199999999999977, 0.04999999999999982, 0.10200000000000033, 0.15000000000000036, 0.19899999999999984, 0.25, 0.2990000000000004, 0.3490000000000002, 0.4009999999999998, 0.44899999999999984, 0.5040000000000004, 0.5499999999999998, 0.5990000000000002, 0.649, 0.7000000000000002, 0.7489999999999997, 0.7990000000000004, 0.8490000000000002, 0.9000000000000004, 0.9500000000000002, 0.9989999999999996, 1.0490000000000004, 1.101, 1.149, 1.2000000000000002, 1.2489999999999997, 1.2990000000000004, 1.3490000000000002, 1.399, 1.4489999999999998, 1.4980000000000002, 1.5490000000000004, 1.5990000000000002, 1.649000000000001, 1.6989999999999998, 1.7490000000000006, 1.7989999999999997, 1.849, 1.9000000000000004, 1.949, 1.9990000000000008, 2.0489999999999995, 2.099, 2.149000000000001, 2.199, 2.249000000000001, 2.2989999999999995, 2.349, 2.3979999999999997, 2.4480000000000004, 2.499000000000001, 2.5489999999999995, 2.599, 2.649000000000001, 2.699, 2.749000000000001, 2.7989999999999995, 2.849, 2.899000000000001, 2.949, 2.999000000000001, 3.0489999999999995, 3.099, 3.1479999999999997, 3.199, 3.249000000000001, 3.301, 3.349, 3.399000000000001, 3.449, 3.499000000000001, 3.5489999999999995, 3.599, 3.65, 3.6999999999999993, 3.749000000000001, 3.798999999999999, 3.849])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9081244, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0354805, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.049768, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2666006, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.039152335, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.66283673, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49683243, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42768282, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9653028, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8743947, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.851885, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.576265, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.7922535, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.304532, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.0232, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.001676, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3998394, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.466404, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5068784, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8306899, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29614404, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7007594, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.30494934, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.81920886, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4870825, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4464636, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3862376, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.002698, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.040642, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.325592, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.837055, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6370673, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.911489, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9373887, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0264337, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.487571, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4496004, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.62456083, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009584684, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2938292, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0741377, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0587654, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9301634, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.397058, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.225415, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.284457, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.56486, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.180235, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.351268, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3636131, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5283457, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13849308, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5879001, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.515147, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3065721, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7721406, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.643528, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6288934, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4100494, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.714525, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.331632, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.16394, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2379265, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6997876, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7900705, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8164346, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0931379, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10507187, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6056262, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32242236, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.704728, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3138015, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2542305, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.209766, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.872936, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.971847, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.359121, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.9413805, 2.44955, 0)]
+
+[sub_resource type="SphereMesh" id="SphereMesh_mgdjv"]
+
+[sub_resource type="PackedScene" id="PackedScene_iegka"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@154", "transform", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 4, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0),
+"variants": [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1934786, 8.204365, 2.6762645), SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_sprjh"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_iegka")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1934786, 8.204365, 2.6762645)
+despawn_time = 0.21799999999999997
+times = Array[float]([0.00199999999999977, 0.04999999999999982, 0.10200000000000033, 0.15000000000000036, 0.19899999999999984])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1934786, 8.204365, 2.6762645), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.332949, 8.362988, 2.685866), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4724197, 8.521612, 2.6954677), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6118903, 8.680236, 2.7050693), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.751361, 8.83886, 2.714671)]
+
+[sub_resource type="PackedScene" id="PackedScene_7ksxg"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@155", "transform", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 4, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0),
+"variants": [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2400517, -3.5218134, 2.6871402), SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_7yrhe"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_7ksxg")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2400517, -3.5218134, 2.6871402)
+despawn_time = 0.7160000000000002
+times = Array[float]([0.00199999999999977, 0.04999999999999982, 0.10200000000000033, 0.15000000000000036, 0.19899999999999984, 0.25, 0.2990000000000004, 0.3490000000000002, 0.4009999999999998, 0.44899999999999984, 0.5040000000000004, 0.5499999999999998, 0.5990000000000002, 0.649, 0.7000000000000002])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2400517, -3.5218134, 2.6871402), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3969345, -3.7633016, 2.7009597), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5538173, -4.00479, 2.7147791), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7107, -4.246279, 2.7285986), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.867583, -4.4877677, 2.742418), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0244656, -4.7292566, 2.7562375), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1813483, -4.9707456, 2.770057), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.338231, -5.2122345, 2.7838764), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.495114, -5.4537234, 2.7976959), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6519966, -5.6952124, 2.8115153), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8088794, -5.9367013, 2.8253348), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.965762, -6.17819, 2.8391542), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.122646, -6.419679, 2.8529737), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.279531, -6.661168, 2.8667932), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.436415, -6.902657, 2.8806126)]
+
+[sub_resource type="PackedScene" id="PackedScene_aimkm"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@156", "transform", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 4, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0),
+"variants": [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6055949, -0.4826845, 2.0817108), SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_1usvp"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_aimkm")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6055949, -0.4826845, 2.0817108)
+despawn_time = 1.2320000000000002
+times = Array[float]([0.00199999999999977, 0.04999999999999982, 0.10200000000000033, 0.15000000000000036, 0.19899999999999984, 0.25, 0.2990000000000004, 0.3490000000000002, 0.4009999999999998, 0.44899999999999984, 0.5040000000000004, 0.5499999999999998, 0.5990000000000002, 0.649, 0.7000000000000002, 0.7489999999999997, 0.7990000000000004, 0.8490000000000002, 0.9000000000000004, 0.9500000000000002, 0.9989999999999996, 1.0490000000000004, 1.101, 1.149, 1.2000000000000002])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6055949, -0.4826845, 2.0817108), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5626409, -0.6836077, 2.0650668), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5196869, -0.8845309, 2.0484228), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.476733, -1.0854541, 2.0317788), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.433779, -1.2863773, 2.0151348), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.390825, -1.4873005, 1.9984908), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3478711, -1.6882237, 1.9818468), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3049171, -1.8891469, 1.9652028), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2619631, -2.0900702, 1.9485588), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2190092, -2.2909935, 1.9319148), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1760552, -2.4919167, 1.9152708), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1331012, -2.6928399, 1.8986268), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0901473, -2.893763, 1.8819828), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0471933, -3.0946863, 1.8653388), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0042393, -3.2956095, 1.8486948), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.96128553, -3.4965327, 1.8320508), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.91833174, -3.697456, 1.8154068), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.87537795, -3.898379, 1.7987628), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.83242416, -4.099303, 1.7821188), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7894704, -4.3002267, 1.7654748), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7465166, -4.5011506, 1.7488308), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7035628, -4.7020745, 1.7321868), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.660609, -4.9029984, 1.7155428), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6176552, -5.1039224, 1.6988988), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5747014, -5.3048463, 1.6822548)]
+
+[sub_resource type="PackedScene" id="PackedScene_e2f45"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@157", "transform", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 4, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0),
+"variants": [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1262333, 3.1502736, 3.197629), SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_ned7t"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_e2f45")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1262333, 3.1502736, 3.197629)
+despawn_time = 1.7330000000000003
+times = Array[float]([0.00199999999999977, 0.04999999999999982, 0.10200000000000033, 0.15000000000000036, 0.19899999999999984, 0.25, 0.2990000000000004, 0.3490000000000002, 0.4009999999999998, 0.44899999999999984, 0.5040000000000004, 0.5499999999999998, 0.5990000000000002, 0.649, 0.7000000000000002, 0.7489999999999997, 0.7990000000000004, 0.8490000000000002, 0.9000000000000004, 0.9500000000000002, 0.9989999999999996, 1.0490000000000004, 1.101, 1.149, 1.2000000000000002, 1.2489999999999997, 1.2990000000000004, 1.3490000000000002, 1.399, 1.4489999999999998, 1.4980000000000002, 1.5490000000000004, 1.5990000000000002, 1.649000000000001, 1.6989999999999998])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1262333, 3.1502736, 3.197629), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1003604, 3.253799, 3.3590121), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0744874, 3.3573244, 3.5203953), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0486145, 3.4608498, 3.6817784), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0227416, 3.5643752, 3.8431616), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9968685, 3.6679006, 4.0045447), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9709952, 3.771426, 4.165928), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9451219, 3.8749514, 4.327311), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9192486, 3.9784768, 4.488694), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8933753, 4.0820026, 4.6500773), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.867502, 4.1855288, 4.8114605), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8416287, 4.289055, 4.9728436), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8157554, 4.392581, 5.134227), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7898821, 4.496107, 5.29561), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7640088, 4.599633, 5.456993), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7381355, 4.7031593, 5.6183763), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7122622, 4.8066854, 5.7797594), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6863889, 4.9102116, 5.9411426), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6605155, 5.0137377, 6.1025257), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6346422, 5.117264, 6.263909), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6087689, 5.22079, 6.425292), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5828956, 5.324316, 6.586675), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5570223, 5.427842, 6.7480583), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.531149, 5.5313683, 6.9094415), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5052757, 5.6348944, 7.0708246), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4794024, 5.7384205, 7.232208), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4535291, 5.8419466, 7.393591), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4276558, 5.9454727, 7.554974), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4017825, 6.048999, 7.716357), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3759092, 6.152525, 7.8777404), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3500359, 6.256051, 8.039124), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3241626, 6.359577, 8.200508), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2982893, 6.4631033, 8.361893), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.272416, 6.5666294, 8.523277), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2465427, 6.6701555, 8.684662)]
+
+[sub_resource type="PackedScene" id="PackedScene_x1scx"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("Spawned", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_jmbwj"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_x1scx")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+spawn_time = 0.21799999999999997
+despawn_time = 2.2319999999999993
+times = Array[float]([0.25, 0.2990000000000004, 0.3490000000000002, 0.4009999999999998, 0.44899999999999984, 0.5040000000000004, 0.5499999999999998, 0.5990000000000002, 0.649, 0.7000000000000002, 0.7489999999999997, 0.7990000000000004, 0.8490000000000002, 0.9000000000000004, 0.9500000000000002, 0.9989999999999996, 1.0490000000000004, 1.101, 1.149, 1.2000000000000002, 1.2489999999999997, 1.2990000000000004, 1.3490000000000002, 1.399, 1.4489999999999998, 1.4980000000000002, 1.5490000000000004, 1.5990000000000002, 1.649000000000001, 1.6989999999999998, 1.7490000000000006, 1.7989999999999997, 1.849, 1.9000000000000004, 1.949, 1.9990000000000008, 2.0489999999999995, 2.099, 2.149000000000001, 2.199])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.224497, 2.5587437, 2.323484), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1053212, 2.4405606, 2.2831793), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9861451, 2.3223774, 2.2428746), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8669689, 2.2041943, 2.20257), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7477926, 2.0860112, 2.1622653), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6286163, 1.967828, 2.1219606), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5094401, 1.8496449, 2.081656), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3902638, 1.7314618, 2.0413513), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2710875, 1.6132786, 2.0010467), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1519113, 1.4950955, 1.9607416), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.032735, 1.3769124, 1.9204366), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9135587, 1.2587292, 1.8801316), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.79438245, 1.1405461, 1.8398266), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6752062, 1.022363, 1.7995216), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5560299, 0.90418, 1.7592165), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4368537, 0.78599703, 1.7189115), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.31767753, 0.6678141, 1.6786065), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19850135, 0.5496311, 1.6383015), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07932517, 0.43144816, 1.5979965), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03985102, 0.3132652, 1.5576915), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1590272, 0.19508225, 1.5173864), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2782034, 0.076899275, 1.4770814), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39737958, -0.041283704, 1.4367764), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5165558, -0.15946668, 1.3964714), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.63573205, -0.27764964, 1.3561664), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7549083, -0.3958326, 1.3158613), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8740846, -0.51401556, 1.2755563), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.99326086, -0.6321985, 1.2352513), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1124371, -0.75038147, 1.1949463), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2316134, -0.8685644, 1.1546413), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3507897, -0.9867474, 1.1143363), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4699659, -1.1049305, 1.0740312), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5891422, -1.2231137, 1.0337262), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7083185, -1.3412968, 0.99342126), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8274947, -1.4594799, 0.9531164), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.946671, -1.5776631, 0.9128116), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0658472, -1.6958462, 0.87250674), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.185023, -1.8140293, 0.8322019), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.304199, -1.9322125, 0.79189706), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.423375, -2.0503955, 0.7515922)]
+
+[sub_resource type="PackedScene" id="PackedScene_yr1xb"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@158", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_vpuuj"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_yr1xb")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+spawn_time = 0.7160000000000002
+despawn_time = 2.7319999999999993
+times = Array[float]([0.7489999999999997, 0.7990000000000004, 0.8490000000000002, 0.9000000000000004, 0.9500000000000002, 0.9989999999999996, 1.0499999999999998, 1.101, 1.149, 1.2000000000000002, 1.2489999999999997, 1.2990000000000004, 1.3490000000000002, 1.399, 1.4489999999999998, 1.4980000000000002, 1.5490000000000004, 1.5990000000000002, 1.649000000000001, 1.6989999999999998, 1.7490000000000006, 1.7989999999999997, 1.849, 1.9000000000000004, 1.949, 1.9990000000000008, 2.0489999999999995, 2.099, 2.149000000000001, 2.199, 2.249000000000001, 2.2989999999999995, 2.349, 2.3979999999999997, 2.4480000000000004, 2.499000000000001, 2.5489999999999995, 2.599, 2.649000000000001, 2.699])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.223044, 2.653411, 2.336772), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0995085, 2.8192294, 2.3363314), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.975973, 2.9850478, 2.3358908), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8524373, 3.1508663, 2.3354502), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7289015, 3.3166847, 2.3350096), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6053658, 3.4825032, 2.334569), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48183, 3.6483216, 2.3341284), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3582942, 3.81414, 2.3336878), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2347585, 3.9799585, 2.3332472), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1112227, 4.1457763, 2.3328066), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.987687, 4.311594, 2.332366), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.86415124, 4.4774117, 2.3319254), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7406155, 4.6432295, 2.3314848), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.61707973, 4.809047, 2.3310442), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493544, 4.974865, 2.3306036), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37000835, 5.1406827, 2.330163), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24647267, 5.3065004, 2.3297224), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.122936964, 5.472318, 2.3292818), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0005987361, 5.638136, 2.3288412), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.124134436, 5.8039536, 2.3284006), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24767014, 5.9697714, 2.32796), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3712058, 6.135589, 2.3275194), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49474147, 6.301407, 2.3270788), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6182772, 6.4672246, 2.3266382), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.74181294, 6.6330423, 2.3261976), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8653487, 6.79886, 2.325757), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.98888445, 6.964678, 2.3253164), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1124202, 7.1304955, 2.3248758), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.235956, 7.2963133, 2.3244352), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3594917, 7.462131, 2.3239946), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4830275, 7.6279488, 2.323554), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6065632, 7.7937665, 2.3231134), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.730099, 7.959584, 2.3226728), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8536347, 8.125403, 2.3222322), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9771705, 8.291223, 2.3217916), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1007059, 8.457042, 2.321351), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2242413, 8.622861, 2.3209105), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3477767, 8.78868, 2.3204699), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.471312, 8.954499, 2.3200293), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5948474, 9.120318, 2.3195887)]
+
+[sub_resource type="PackedScene" id="PackedScene_ieikn"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@159", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_ckyfk"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_ieikn")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+spawn_time = 1.2160000000000002
+despawn_time = 3.2330000000000005
+times = Array[float]([1.2489999999999997, 1.2990000000000004, 1.3490000000000002, 1.399, 1.4489999999999998, 1.4980000000000002, 1.5490000000000004, 1.5990000000000002, 1.649000000000001, 1.6989999999999998, 1.7490000000000006, 1.7989999999999997, 1.849, 1.9000000000000004, 1.949, 1.9990000000000008, 2.0489999999999995, 2.099, 2.149000000000001, 2.199, 2.249000000000001, 2.2989999999999995, 2.349, 2.3979999999999997, 2.4480000000000004, 2.499000000000001, 2.5489999999999995, 2.599, 2.649000000000001, 2.699, 2.749000000000001, 2.7989999999999995, 2.849, 2.899000000000001, 2.949, 2.999000000000001, 3.0489999999999995, 3.099, 3.149000000000001, 3.199])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3165607, 2.6699765, 2.384764), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4735758, 2.8854916, 2.5282993), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.630591, 3.1010067, 2.6718347), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.787606, 3.316522, 2.81537), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.944621, 3.532037, 2.9589055), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1016362, 3.7475522, 3.1024408), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2586513, 3.9630673, 3.2459762), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4156663, 4.178582, 3.3895116), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5726814, 4.3940973, 3.533047), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7296965, 4.6096125, 3.6765823), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8867116, 4.8251276, 3.8201177), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.043727, 5.0406427, 3.963653), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2007427, 5.256158, 4.107189), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3577585, 5.471673, 4.2507253), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5147743, 5.687188, 4.3942614), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.67179, 5.9027033, 4.5377975), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.828806, 6.1182184, 4.6813335), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9858217, 6.3337336, 4.8248696), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1428375, 6.5492487, 4.9684057), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2998533, 6.764764, 5.111942), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.456869, 6.980279, 5.255478), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.613885, 7.195794, 5.399014), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7709007, 7.4113092, 5.54255), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9279165, 7.6268244, 5.686086), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0849323, 7.8423395, 5.8296223), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.241948, 8.057855, 5.9731584), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.398964, 8.27337, 6.1166945), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5559797, 8.488885, 6.2602305), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7129955, 8.7044, 6.4037666), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8700113, 8.919915, 6.5473027), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.027027, 9.13543, 6.690839), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.184043, 9.350945, 6.834375), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.3410587, 9.566461, 6.977911), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4980745, 9.781976, 7.121447), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6550903, 9.997491, 7.264983), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.812106, 10.213006, 7.4085193), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.969122, 10.428521, 7.5520554), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.126138, 10.644036, 7.6955914), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.283154, 10.859551, 7.8391275), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.440169, 11.075067, 7.9826636)]
+
+[sub_resource type="PackedScene" id="PackedScene_4dude"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@160", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_dkg6h"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_4dude")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+spawn_time = 1.7159999999999993
+despawn_time = 3.7319999999999993
+times = Array[float]([1.7490000000000006, 1.7989999999999997, 1.849, 1.9000000000000004, 1.949, 1.9990000000000008, 2.0489999999999995, 2.099, 2.149000000000001, 2.199, 2.249000000000001, 2.2989999999999995, 2.349, 2.3979999999999997, 2.4480000000000004, 2.499000000000001, 2.5489999999999995, 2.599, 2.649000000000001, 2.699, 2.749000000000001, 2.7989999999999995, 2.849, 2.899000000000001, 2.949, 2.999000000000001, 3.0489999999999995, 3.099, 3.149000000000001, 3.199, 3.249000000000001, 3.301, 3.349, 3.399000000000001, 3.449, 3.499000000000001, 3.5489999999999995, 3.599, 3.65, 3.6999999999999993])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3349814, 2.6388066, 2.288368), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5472586, 2.760812, 2.1427155), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7595358, 2.8828175, 1.997063), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.971813, 3.004823, 1.8514109), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1840901, 3.1268284, 1.7057587), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3963673, 3.248834, 1.5601065), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6086445, 3.3708394, 1.4144543), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8209217, 3.4928448, 1.2688022), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.033199, 3.6148503, 1.12315), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2454767, 3.7368557, 0.9774978), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4577546, 3.8588612, 0.83184564), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6700325, 3.9808667, 0.68619347), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8823104, 4.102872, 0.5405413), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0945883, 4.2248774, 0.39488903), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.306866, 4.346883, 0.24923678), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.519144, 4.4688883, 0.10358456), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.731422, 4.5908937, -0.042067673), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9437, 4.712899, -0.1877199), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1559777, 4.8349047, -0.33337215), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3682556, 4.95691, -0.4790244), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5805335, 5.0789156, -0.6246766), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7928114, 5.200921, -0.77032876), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0050893, 5.3229265, -0.91598094), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.217367, 5.444932, -1.0616331), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.429645, 5.5669374, -1.2072853), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.641923, 5.688943, -1.3529375), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.854201, 5.8109484, -1.4985896), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.066479, 5.932954, -1.6442418), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.278755, 6.0549593, -1.789894), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.491032, 6.1769648, -1.9355462), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.703308, 6.29897, -2.0811985), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.915585, 6.4209757, -2.226851), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.127861, 6.542981, -2.3725035), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.3401375, 6.6649866, -2.518156), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.552414, 6.786992, -2.6638086), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.76469, 6.9089975, -2.809461), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.976967, 7.031003, -2.9551136), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.189243, 7.1530085, -3.1007662), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.40152, 7.275014, -3.2464187), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.613796, 7.3970194, -3.3920712)]
+
+[sub_resource type="PackedScene" id="PackedScene_3ox13"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@161", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_ad1y3"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_3ox13")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+spawn_time = 2.2159999999999993
+despawn_time = 3.884
+times = Array[float]([2.249000000000001, 2.2989999999999995, 2.349, 2.3979999999999997, 2.4480000000000004, 2.499000000000001, 2.5489999999999995, 2.599, 2.649000000000001, 2.699, 2.749000000000001, 2.7989999999999995, 2.849, 2.899000000000001, 2.949, 2.999000000000001, 3.0489999999999995, 3.099, 3.149000000000001, 3.199, 3.249000000000001, 3.301, 3.349, 3.399000000000001, 3.449, 3.499000000000001, 3.5489999999999995, 3.599, 3.65, 3.6999999999999993, 3.749000000000001, 3.798999999999999, 3.849])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2635393, 2.6298516, 2.4121985), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.26149, 2.724992, 2.6380377), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.259441, 2.8201325, 2.8638768), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2573917, 2.915273, 3.089716), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2553425, 3.0104134, 3.315555), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2532933, 3.1055539, 3.5413942), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.251244, 3.2006943, 3.7672334), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2491949, 3.2958348, 3.9930725), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2471457, 3.3909752, 4.2189116), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2450964, 3.4861157, 4.444751), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2430472, 3.5812562, 4.67059), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.240998, 3.6763966, 4.896429), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2389488, 3.771537, 5.122268), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2368996, 3.8666775, 5.3481073), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2348504, 3.961818, 5.5739465), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2328012, 4.056958, 5.7997856), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.230752, 4.1520987, 6.0256248), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2287028, 4.247239, 6.251464), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2266536, 4.3423796, 6.477303), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2246044, 4.43752, 6.703142), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2225552, 4.5326605, 6.9289813), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.220506, 4.627801, 7.1548204), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2184567, 4.7229414, 7.3806596), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2164075, 4.818082, 7.6064987), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2143583, 4.9132223, 7.832338), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2123091, 5.008363, 8.058177), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21026, 5.103503, 8.284015), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2082107, 5.1986437, 8.509852), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2061615, 5.293784, 8.73569), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2041123, 5.3889246, 8.961528), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.202063, 5.484065, 9.187366), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2000139, 5.5792055, 9.413203), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1979647, 5.674346, 9.639041)]
+
+[sub_resource type="PackedScene" id="PackedScene_csbh7"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("Spawned", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_dt3yx"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_csbh7")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+spawn_time = 2.7170000000000005
+despawn_time = 3.884
+times = Array[float]([2.749000000000001, 2.7989999999999995, 2.849, 2.899000000000001, 2.949, 2.999000000000001, 3.0489999999999995, 3.099, 3.149000000000001, 3.199, 3.249000000000001, 3.301, 3.349, 3.399000000000001, 3.449, 3.499000000000001, 3.5489999999999995, 3.599, 3.65, 3.6999999999999993, 3.749000000000001, 3.798999999999999, 3.849])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3142443, 2.5702972, 2.3607552), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.46431, 2.4867747, 2.4322643), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6143756, 2.4032521, 2.5037735), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7644413, 2.3197296, 2.5752826), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.914507, 2.236207, 2.6467917), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0645726, 2.1526845, 2.7183008), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2146382, 2.069162, 2.78981), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.364704, 1.9856392, 2.861319), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5147696, 1.9021163, 2.9328282), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6648352, 1.8185934, 3.0043373), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8149009, 1.7350705, 3.0758464), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9649665, 1.6515476, 3.1473556), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1150317, 1.5680246, 3.2188647), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2650967, 1.4845017, 3.2903738), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4151616, 1.4009788, 3.361883), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5652266, 1.3174559, 3.433392), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7152915, 1.233933, 3.5049012), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8653564, 1.15041, 3.5764103), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0154214, 1.0668871, 3.6479194), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1654863, 0.9833643, 3.7194285), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3155513, 0.89984155, 3.7909377), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.465616, 0.8163188, 3.8624468), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.615681, 0.7327961, 3.933956)]
+
+[sub_resource type="PackedScene" id="PackedScene_vkvbo"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@162", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_1i1dp"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_vkvbo")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+spawn_time = 3.2159999999999993
+despawn_time = 3.884
+times = Array[float]([3.249000000000001, 3.301, 3.349, 3.399000000000001, 3.449, 3.499000000000001, 3.5489999999999995, 3.599, 3.65, 3.6999999999999993, 3.749000000000001, 3.798999999999999, 3.849])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3375921, 2.635889, 2.3832583), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5577013, 2.749142, 2.5222769), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7778106, 2.8623948, 2.6612954), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9979198, 2.9756477, 2.800314), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.218029, 3.0889006, 2.9393325), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4381382, 3.2021534, 3.078351), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6582475, 3.3154063, 3.2173696), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8783567, 3.4286592, 3.356388), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0984654, 3.541912, 3.4954066), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.318574, 3.655165, 3.6344252), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5386825, 3.7684178, 3.7734437), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.758791, 3.8816707, 3.9124622), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9788995, 3.9949236, 4.051481)]
+
+[sub_resource type="PackedScene" id="PackedScene_j661d"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("@MeshInstance3D@163", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1805778663),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("SphereMesh_mgdjv"), ExtResource("16_kejrh")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_6mp38"]
+script = ExtResource("1_v2i33")
+CaptureType = ExtResource("12_x3ytk")
+node_capture = SubResource("PackedScene_j661d")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+spawn_time = 3.7200000000000006
+despawn_time = 3.884
+times = Array[float]([3.749000000000001, 3.798999999999999, 3.849])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.259624, 2.5907953, 2.3962376), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2458289, 2.5687668, 2.574194), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2320337, 2.5467384, 2.7521503)]
+
+[resource]
+script = ExtResource("17_flwcl")
+settings = ExtResource("18_q3co7")
+viewport_size = Vector2i(1152, 648)
+node_records = Array[ExtResource("1_v2i33")]([SubResource("Resource_wl0bj"), SubResource("Resource_cccpe"), SubResource("Resource_arbte"), SubResource("Resource_00vmd"), SubResource("Resource_fcrys"), SubResource("Resource_sprjh"), SubResource("Resource_7yrhe"), SubResource("Resource_1usvp"), SubResource("Resource_ned7t"), SubResource("Resource_jmbwj"), SubResource("Resource_vpuuj"), SubResource("Resource_ckyfk"), SubResource("Resource_dkg6h"), SubResource("Resource_ad1y3"), SubResource("Resource_dt3yx"), SubResource("Resource_1i1dp"), SubResource("Resource_6mp38")])
+record_duration = 3.884
+state = 2
