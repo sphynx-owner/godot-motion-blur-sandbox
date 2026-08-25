@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="7_33nae"]
 [ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="8_etsjh"]
 [ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="9_2koiq"]
+[ext_resource type="RDShaderFile" uid="uid://dyxn6g5gvoge7" path="res://addons/easy-compositor/debug/shader_stages/debug_overlay.glsl" id="11_6cvt0"]
+[ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="12_4fu8a"]
 [ext_resource type="Script" uid="uid://7iqb4ur7xgki" path="res://blur-generator/generated_blur_display.gd" id="17_4orhx"]
 
 [sub_resource type="Resource" id="Resource_xv8vq"]
@@ -28,8 +30,8 @@ effect_callback_type = 4
 needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("7_33nae")
-clamp_velocities_to_tile = true
 samples = 4
+debug = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
 [sub_resource type="Compositor" id="Compositor_f8kah"]
@@ -41,6 +43,53 @@ name = "Guertin-Sphynx blur"
 framerate = 60
 resolution = 2
 custom_compositor = SubResource("Compositor_f8kah")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_bx8n8"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_2f4hc"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0kv"), SubResource("CompositorEffect_bx8n8")])
+
+[sub_resource type="Resource" id="Resource_f8kah"]
+script = ExtResource("4_dd3du")
+name = "Guertin-Sphynx blur"
+framerate = 60
+resolution = 2
+custom_compositor = SubResource("Compositor_2f4hc")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_2f4hc"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 1
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_6cvt0"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0kv"), SubResource("CompositorEffect_2f4hc")])
+
+[sub_resource type="Resource" id="Resource_4fu8a"]
+script = ExtResource("4_dd3du")
+name = "Guertin-Sphynx blur"
+framerate = 60
+resolution = 2
+custom_compositor = SubResource("Compositor_6cvt0")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
 [node name="BlurComparer" type="Control" unique_id=1833348784 node_paths=PackedStringArray("replayer")]
@@ -57,8 +106,8 @@ replayer = NodePath("HBoxContainer/SubViewportContainer/SubViewport/Replayer")
 physics_interpolation_mode = 2
 script = ExtResource("3_mapp4")
 replayer = NodePath("../HBoxContainer/SubViewportContainer/SubViewport/Replayer")
-generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"), SubResource("Resource_4orhx")])
-displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay2")]
+generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"), SubResource("Resource_4orhx"), SubResource("Resource_f8kah"), SubResource("Resource_4fu8a")])
+displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay2"), NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay4")]
 metadata/_custom_type_script = "uid://clxyfxkllajvu"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1392330244]
@@ -73,10 +122,8 @@ layout_mode = 2
 own_world_3d = true
 handle_input_locally = false
 msaa_3d = 1
-texture_mipmap_bias = -1.0
 anisotropic_filtering_level = 3
-size = Vector2i(856, 482)
-render_target_update_mode = 4
+size = Vector2i(1107, 623)
 
 [node name="Replayer" type="AnimationPlayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=2102459665]
 root_node = NodePath(".")
@@ -84,11 +131,22 @@ script = ExtResource("1_ri01s")
 metadata/_custom_type_script = "uid://bcksmwxwkpkw8"
 
 [node name="GeneratedBlurDisplay" type="SubViewportContainer" parent="HBoxContainer" unique_id=1399594282]
+visible = false
 layout_mode = 2
 script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="HBoxContainer" unique_id=1581164363]
+layout_mode = 2
+script = ExtResource("17_4orhx")
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay3" type="SubViewportContainer" parent="HBoxContainer" unique_id=1231578033]
+layout_mode = 2
+script = ExtResource("17_4orhx")
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="HBoxContainer" unique_id=777395960]
 layout_mode = 2
 script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"

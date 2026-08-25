@@ -110,3 +110,4 @@ timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="Spawner" unique_id=818856384]
 wait_time = 0.5
+autostart = true

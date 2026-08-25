@@ -79,6 +79,12 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 	
 	display.copy_environment_from_replay(replayer)
 	
+	var past_environment: Environment = ReplayUtils.get_active_environment(replayer)
+	
+	var past_camera_attributes: CameraAttributes = ReplayUtils.get_active_camera_attributes(replayer)
+	
+	var past_compositor: Compositor = ReplayUtils.get_active_compositor(replayer)
+	
 	var viewport: Viewport = ReplayUtils.safe_get_viewport(replayer)
 	
 	var start_position: float = replayer.get_position()
@@ -144,6 +150,10 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 	viewport.render_target_update_mode = SubViewport.UPDATE_WHEN_VISIBLE
 	
 	replayer.seek_rep(start_position)
+	
+	ReplayUtils.set_active_environment(replayer, past_environment)
+	ReplayUtils.set_active_camera_attributes(replayer, past_camera_attributes)
+	ReplayUtils.set_active_compositor(replayer, past_compositor)
 
 #endregion
 
