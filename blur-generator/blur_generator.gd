@@ -18,6 +18,10 @@ enum Directionality{CENTERED, LEADING, TRAILING}
 		
 		update_configuration_warnings()
 
+@export var use_captured_position: bool = false
+
+@export var captured_position: float = 0
+
 @export var generation_presets: Array[BlurGenerationPreset]:
 	set(value):
 		generation_presets = value
@@ -30,11 +34,19 @@ enum Directionality{CENTERED, LEADING, TRAILING}
 		
 		update_configuration_warnings()
 
+@export_tool_button("capture replay position") var capture_replay_position = _capture_replay_position
+
 @export_tool_button("generate") var editor_generate = _editor_generate
 
 var rd: RenderingDevice
 
 #region Tool Button Methods
+
+func _capture_replay_position() -> void:
+	assert(replayer.is_replay_loaded(), "replay must be loaded")
+	
+	captured_position = replayer.get_position()
+
 
 func _editor_generate() -> void:
 	generate_all()
@@ -89,7 +101,7 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 	
 	var viewport_container: SubViewportContainer = viewport.get_parent()
 	
-	var start_position: float = replayer.get_position()
+	var start_position: float = captured_position if use_captured_position else replayer.get_position()
 	
 	var time_range: float = 1.0 / preset.framerate
 	

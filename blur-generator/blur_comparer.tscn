@@ -67,6 +67,7 @@ needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("12_4fu8a")
 draw_debug = true
+full_screen = null
 debug = true
 metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
 
@@ -93,7 +94,7 @@ framerate_independent = false
 debug = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_2f4hc"]
+[sub_resource type="CompositorEffect" id="CompositorEffect_4fu8a"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
@@ -103,6 +104,30 @@ needs_normal_roughness = false
 script = ExtResource("12_4fu8a")
 draw_debug = true
 debug_page = 1
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_4fu8a"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0kv"), SubResource("CompositorEffect_4fu8a")])
+
+[sub_resource type="Resource" id="Resource_2f4hc"]
+script = ExtResource("4_dd3du")
+name = "Debug Page 2"
+resolution = 2
+custom_compositor = SubResource("Compositor_4fu8a")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_2f4hc"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 7
+full_screen = true
 debug = true
 metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
 
@@ -131,8 +156,10 @@ scene_record = ExtResource("2_4fu8a")
 physics_interpolation_mode = 2
 script = ExtResource("3_mapp4")
 replayer = NodePath("../HBoxContainer/SubViewportContainer/SubViewport/Replayer")
-generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"), SubResource("Resource_4orhx"), SubResource("Resource_f8kah"), SubResource("Resource_4fu8a")])
-displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay2"), NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay4")]
+use_captured_position = true
+captured_position = 1.65
+generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"), SubResource("Resource_4orhx"), SubResource("Resource_4orhx"), SubResource("Resource_f8kah"), SubResource("Resource_2f4hc"), SubResource("Resource_4fu8a")])
+displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay4"), NodePath("../GeneratedBlurDisplay2"), NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay2"), NodePath("../GeneratedBlurDisplay4")]
 metadata/_custom_type_script = "uid://clxyfxkllajvu"
 
 [node name="HBoxContainer" type="GridContainer" parent="." unique_id=841730416]
@@ -160,14 +187,14 @@ metadata/_custom_type_script = "uid://bcksmwxwkpkw8"
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
-save_file = "res://images/y_velocity_mistake(ground_truth).png"
+save_file = "res://images/fix_noise_harmonics(ground_truth).png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
-[node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="HBoxContainer" unique_id=1581164363]
+[node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="HBoxContainer" unique_id=1935117158]
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
-save_file = "res://images/y_velocity_mistake(after).png"
+save_file = "res://images/fix_noise_harmonics(before).png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay3" type="SubViewportContainer" parent="HBoxContainer" unique_id=1231578033]
@@ -176,8 +203,27 @@ layout_mode = 2
 script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
-[node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="HBoxContainer" unique_id=777395960]
+[node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="HBoxContainer" unique_id=1429213589]
 texture_filter = 1
 layout_mode = 2
+script = ExtResource("17_4orhx")
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="." unique_id=1581164363]
+self_modulate = Color(1, 1, 1, 0.3137255)
+texture_filter = 1
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("17_4orhx")
+save_file = "res://images/y_velocity_mistake(after).png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="." unique_id=777395960]
+self_modulate = Color(1, 1, 1, 0.15686275)
+texture_filter = 1
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
 script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
