@@ -2,6 +2,10 @@
 class_name GeneratedBlurDisplay
 extends SubViewportContainer
 
+@export_file_path("*.png") var save_file: String
+
+@export_tool_button("save image") var save_image = _save_image
+
 var preset_name: String:
 	set(value):
 		_preset_name_label.text = value
@@ -17,13 +21,42 @@ var _preset_name_label: Label
 
 var _full_screen_quad: FullScreenQuad
 
+var _editor_file_dialog: EditorFileDialog
+
+
+func _save_image() -> void:
+	if save_file.is_empty():
+		push_error("save file path is empty, cannot save image")
+		return
+	
+	(get_child(2) as SubViewport).get_texture().get_image().save_png(save_file)
+	
+	
+	#_editor_file_dialog.popup_centered()
+	#
+	#_editor_file_dialog.file_selected.connect(_on_save_file_selected)
+
+
+func _on_save_file_selected(file: String) -> void:
+	texture.get_image().save_png(file)
+
 
 func _ready() -> void:
 	_preset_name_label = Label.new()
 	
 	_preset_name_label.add_theme_font_size_override("font_size", 30)
 	
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	
 	add_child(_preset_name_label)
+	
+	_editor_file_dialog = EditorFileDialog.new()
+	
+	_editor_file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	
+	_editor_file_dialog.filters = ["*.png"]
+	
+	add_child(_editor_file_dialog)
 
 
 func _notification(what: int) -> void:
@@ -39,7 +72,7 @@ func _notification(what: int) -> void:
 
 func clear_environment() -> void:
 	for child in get_children():
-		if child == _preset_name_label:
+		if child == _preset_name_label or child == _editor_file_dialog:
 			continue
 		
 		remove_child(child)

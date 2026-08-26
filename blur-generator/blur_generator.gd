@@ -87,6 +87,8 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 	
 	var viewport: Viewport = ReplayUtils.safe_get_viewport(replayer)
 	
+	var viewport_container: SubViewportContainer = viewport.get_parent()
+	
 	var start_position: float = replayer.get_position()
 	
 	var time_range: float = 1.0 / preset.framerate
@@ -126,6 +128,14 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 	
 	var effect: CompositorEffect = ReplayUtils.get_or_add_active_compositor_effect(replayer, BlurGeneratorCompositor)
 	
+	viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
+	
+	# HACK @sphynx-owner: queueing a redraw of the parent SubViewportContainer. Otherwise
+	# the generation can get stuck as long as there are no updates driven by player input.
+	viewport_container.queue_redraw()
+	
+	await RenderingServer.frame_post_draw
+	
 	effect.current_accumulation = 1
 	
 	for i in preset.resolution:
@@ -139,11 +149,21 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 		# the range of motion captured consistent between reoslutions.
 		var current_position: float = start_position + time_offset * time_range + (i + step_offset) * step_size
 		
+		#await get_tree().create_timer(0.5).timeout
+		
 		viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 		
 		replayer.seek_rep(current_position)
 		
+		# HACK @sphynx-owner: queueing a redraw of the parent SubViewportContainer. Otherwise
+		# the generation can get stuck as long as there are no updates driven by player input.
+		viewport_container.queue_redraw()
+		
 		await RenderingServer.frame_post_draw
+	
+	# HACK @sphynx-owner: queueing a redraw of the parent SubViewportContainer. Otherwise
+	# the generation can get stuck as long as there are no updates driven by player input.
+	viewport_container.queue_redraw()
 	
 	await _copy_blur_generator_compositor_result(effect, display)
 	

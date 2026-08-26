@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bcix3u1b01ncj" path="res://blur-generator/blur_comparer.gd" id="1_dd3du"]
 [ext_resource type="Script" uid="uid://bcksmwxwkpkw8" path="res://addons/sphynx-replay-tool/classes/replayer.gd" id="1_ri01s"]
-[ext_resource type="Resource" uid="uid://b0mk0s80rys6f" path="res://replays/playground.tres" id="2_4fu8a"]
+[ext_resource type="Resource" uid="uid://d4du3ja4qxaat" path="res://replays/race_track.tres" id="2_4fu8a"]
 [ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="3_2f4hc"]
 [ext_resource type="Script" uid="uid://clxyfxkllajvu" path="res://blur-generator/blur_generator.gd" id="3_mapp4"]
 [ext_resource type="RDShaderFile" uid="uid://bn88jkvr17x4j" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max.glsl" id="4_4orhx"]
@@ -19,11 +19,10 @@
 [sub_resource type="Resource" id="Resource_xv8vq"]
 script = ExtResource("4_dd3du")
 name = "Ground Truth"
-framerate = 60
-resolution = 60
+resolution = 100
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_pi0kv"]
+[sub_resource type="CompositorEffect" id="CompositorEffect_4orhx"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
@@ -32,19 +31,32 @@ needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("7_33nae")
 samples = 4
+framerate_independent = false
 debug = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
 [sub_resource type="Compositor" id="Compositor_f8kah"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0kv")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_4orhx")])
 
 [sub_resource type="Resource" id="Resource_4orhx"]
 script = ExtResource("4_dd3du")
 name = "Guertin-Sphynx blur"
-framerate = 60
 resolution = 2
 custom_compositor = SubResource("Compositor_f8kah")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_f8kah"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = true
+needs_normal_roughness = false
+script = ExtResource("7_33nae")
+samples = 4
+framerate_independent = false
+debug = true
+metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_bx8n8"]
 resource_local_to_scene = false
@@ -59,15 +71,27 @@ debug = true
 metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
 
 [sub_resource type="Compositor" id="Compositor_2f4hc"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0kv"), SubResource("CompositorEffect_bx8n8")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_f8kah"), SubResource("CompositorEffect_bx8n8")])
 
 [sub_resource type="Resource" id="Resource_f8kah"]
 script = ExtResource("4_dd3du")
-name = "Guertin-Sphynx blur"
-framerate = 60
+name = "Debug Page 1"
 resolution = 2
 custom_compositor = SubResource("Compositor_2f4hc")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_pi0kv"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = true
+needs_normal_roughness = false
+script = ExtResource("7_33nae")
+samples = 4
+framerate_independent = false
+debug = true
+metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_2f4hc"]
 resource_local_to_scene = false
@@ -87,8 +111,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0k
 
 [sub_resource type="Resource" id="Resource_4fu8a"]
 script = ExtResource("4_dd3du")
-name = "Guertin-Sphynx blur"
-framerate = 60
+name = "Debug Page 2"
 resolution = 2
 custom_compositor = SubResource("Compositor_6cvt0")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
@@ -112,10 +135,11 @@ generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"
 displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay2"), NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay4")]
 metadata/_custom_type_script = "uid://clxyfxkllajvu"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1392330244]
+[node name="HBoxContainer" type="GridContainer" parent="." unique_id=841730416]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 5776.0
+offset_bottom = 3256.0
+columns = 3
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer" unique_id=845827005]
 layout_mode = 2
@@ -133,21 +157,27 @@ script = ExtResource("1_ri01s")
 metadata/_custom_type_script = "uid://bcksmwxwkpkw8"
 
 [node name="GeneratedBlurDisplay" type="SubViewportContainer" parent="HBoxContainer" unique_id=1399594282]
+texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
+save_file = "res://images/y_velocity_mistake(ground_truth).png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="HBoxContainer" unique_id=1581164363]
+texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
+save_file = "res://images/y_velocity_mistake(after).png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay3" type="SubViewportContainer" parent="HBoxContainer" unique_id=1231578033]
+texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="HBoxContainer" unique_id=777395960]
+texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
