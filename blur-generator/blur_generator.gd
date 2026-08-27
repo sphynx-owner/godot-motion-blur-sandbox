@@ -22,6 +22,10 @@ enum Directionality{CENTERED, LEADING, TRAILING}
 
 @export var captured_position: float = 0
 
+@export_tool_button("capture replay position") var capture_replay_position = _capture_replay_position
+
+@export_tool_button("generate") var editor_generate = _editor_generate
+
 @export var generation_presets: Array[BlurGenerationPreset]:
 	set(value):
 		generation_presets = value
@@ -33,10 +37,6 @@ enum Directionality{CENTERED, LEADING, TRAILING}
 		displays = value
 		
 		update_configuration_warnings()
-
-@export_tool_button("capture replay position") var capture_replay_position = _capture_replay_position
-
-@export_tool_button("generate") var editor_generate = _editor_generate
 
 var rd: RenderingDevice
 

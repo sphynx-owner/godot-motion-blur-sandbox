@@ -19,7 +19,6 @@
 [sub_resource type="Resource" id="Resource_xv8vq"]
 script = ExtResource("4_dd3du")
 name = "Ground Truth"
-resolution = 100
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_4orhx"]
@@ -157,7 +156,7 @@ physics_interpolation_mode = 2
 script = ExtResource("3_mapp4")
 replayer = NodePath("../HBoxContainer/SubViewportContainer/SubViewport/Replayer")
 use_captured_position = true
-captured_position = 1.65
+captured_position = 1.79
 generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"), SubResource("Resource_4orhx"), SubResource("Resource_4orhx"), SubResource("Resource_f8kah"), SubResource("Resource_2f4hc"), SubResource("Resource_4fu8a")])
 displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay4"), NodePath("../GeneratedBlurDisplay2"), NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay2"), NodePath("../GeneratedBlurDisplay4")]
 metadata/_custom_type_script = "uid://clxyfxkllajvu"
@@ -184,6 +183,7 @@ script = ExtResource("1_ri01s")
 metadata/_custom_type_script = "uid://bcksmwxwkpkw8"
 
 [node name="GeneratedBlurDisplay" type="SubViewportContainer" parent="HBoxContainer" unique_id=1399594282]
+visible = false
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
@@ -194,7 +194,7 @@ metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
-save_file = "res://images/fix_noise_harmonics(before).png"
+save_file = "res://images/fix_y_velocity_dilution(after).png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay3" type="SubViewportContainer" parent="HBoxContainer" unique_id=1231578033]
@@ -210,7 +210,7 @@ script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="." unique_id=1581164363]
-self_modulate = Color(1, 1, 1, 0.3137255)
+self_modulate = Color(1, 1, 1, 0.75686276)
 texture_filter = 1
 layout_mode = 0
 offset_right = 1152.0
@@ -220,7 +220,7 @@ save_file = "res://images/y_velocity_mistake(after).png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="." unique_id=777395960]
-self_modulate = Color(1, 1, 1, 0.15686275)
+self_modulate = Color(1, 1, 1, 0.4862745)
 texture_filter = 1
 layout_mode = 0
 offset_right = 1152.0
