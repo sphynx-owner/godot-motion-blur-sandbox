@@ -91,11 +91,11 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 	
 	display.copy_environment_from_replay(replayer)
 	
-	var past_environment: Environment = ReplayUtils.get_active_environment(replayer)
+	var past_environment: Environment = EasyCompositorUtils.get_active_environment(replayer)
 	
-	var past_camera_attributes: CameraAttributes = ReplayUtils.get_active_camera_attributes(replayer)
+	var past_camera_attributes: CameraAttributes = EasyCompositorUtils.get_active_camera_attributes(replayer)
 	
-	var past_compositor: Compositor = ReplayUtils.get_active_compositor(replayer)
+	var past_compositor: Compositor = EasyCompositorUtils.get_active_compositor(replayer)
 	
 	var viewport: Viewport = ReplayUtils.safe_get_viewport(replayer)
 	
@@ -133,12 +133,12 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 				step_offset = 0.0
 	
 	if preset.custom_compositor:
-		ReplayUtils.set_active_compositor(replayer, preset.custom_compositor.duplicate(true))
+		EasyCompositorUtils.set_active_compositor(replayer, preset.custom_compositor.duplicate(true))
 		
 	else:
-		ReplayUtils.set_active_compositor(replayer, null)
+		EasyCompositorUtils.set_active_compositor(replayer, null)
 	
-	var effect: CompositorEffect = ReplayUtils.get_or_add_active_compositor_effect(replayer, BlurGeneratorCompositor)
+	var effect: CompositorEffect = EasyCompositorUtils.get_or_add_active_compositor_effect(replayer, BlurGeneratorCompositor)
 	
 	viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 	
@@ -183,9 +183,9 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 	
 	replayer.seek_rep(start_position)
 	
-	ReplayUtils.set_active_environment(replayer, past_environment)
-	ReplayUtils.set_active_camera_attributes(replayer, past_camera_attributes)
-	ReplayUtils.set_active_compositor(replayer, past_compositor)
+	EasyCompositorUtils.set_active_environment(replayer, past_environment)
+	EasyCompositorUtils.set_active_camera_attributes(replayer, past_camera_attributes)
+	EasyCompositorUtils.set_active_compositor(replayer, past_compositor)
 
 #endregion
 

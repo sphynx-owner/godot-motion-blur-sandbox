@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bcix3u1b01ncj" path="res://blur-generator/blur_comparer.gd" id="1_dd3du"]
 [ext_resource type="Script" uid="uid://bcksmwxwkpkw8" path="res://addons/sphynx-replay-tool/classes/replayer.gd" id="1_ri01s"]
-[ext_resource type="Resource" uid="uid://bs8elk1aqcict" path="res://replays/race_track_backwards.tres" id="2_4fu8a"]
+[ext_resource type="Resource" uid="uid://8ysuh1818e7b" path="res://replays/race_track_fast.tres" id="2_4fu8a"]
 [ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="3_2f4hc"]
 [ext_resource type="Script" uid="uid://clxyfxkllajvu" path="res://blur-generator/blur_generator.gd" id="3_mapp4"]
 [ext_resource type="RDShaderFile" uid="uid://bn88jkvr17x4j" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max.glsl" id="4_4orhx"]
@@ -139,6 +139,37 @@ resolution = 2
 custom_compositor = SubResource("Compositor_6cvt0")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
+[sub_resource type="CompositorEffect" id="CompositorEffect_33nae"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 2
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_etsjh"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0kv"), SubResource("CompositorEffect_33nae")])
+
+[sub_resource type="Resource" id="Resource_2koiq"]
+script = ExtResource("4_dd3du")
+name = "Debug Page 2"
+resolution = 2
+custom_compositor = SubResource("Compositor_etsjh")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="Animation" id="Animation_4fu8a"]
+length = 1.762999999999991
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2f4hc"]
+_data = {
+&"replay_animation": SubResource("Animation_4fu8a")
+}
+
 [node name="BlurComparer" type="Control" unique_id=1833348784 node_paths=PackedStringArray("replayer")]
 layout_mode = 3
 anchors_preset = 15
@@ -155,9 +186,9 @@ physics_interpolation_mode = 2
 script = ExtResource("3_mapp4")
 replayer = NodePath("../HBoxContainer/SubViewportContainer/SubViewport/Replayer")
 use_captured_position = true
-captured_position = 1.21
-generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"), SubResource("Resource_4orhx"), SubResource("Resource_4orhx"), SubResource("Resource_f8kah"), SubResource("Resource_2f4hc"), SubResource("Resource_4fu8a")])
-displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay4"), NodePath("../GeneratedBlurDisplay2"), NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay2"), NodePath("../GeneratedBlurDisplay4")]
+captured_position = 1.65
+generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"), SubResource("Resource_4orhx"), SubResource("Resource_4orhx"), SubResource("Resource_f8kah"), SubResource("Resource_2f4hc"), SubResource("Resource_4fu8a"), SubResource("Resource_2koiq")])
+displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay4"), NodePath("../GeneratedBlurDisplay2"), NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay2"), NodePath("../GeneratedBlurDisplay4"), NodePath("../HBoxContainer/GeneratedBlurDisplay5")]
 metadata/_custom_type_script = "uid://clxyfxkllajvu"
 
 [node name="HBoxContainer" type="GridContainer" parent="." unique_id=841730416]
@@ -178,6 +209,7 @@ size = Vector2i(1152, 648)
 
 [node name="Replayer" type="AnimationPlayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=2102459665]
 root_node = NodePath(".")
+libraries/ = SubResource("AnimationLibrary_2f4hc")
 script = ExtResource("1_ri01s")
 metadata/_custom_type_script = "uid://bcksmwxwkpkw8"
 
@@ -202,6 +234,12 @@ script = ExtResource("17_4orhx")
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="HBoxContainer" unique_id=1429213589]
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay5" type="SubViewportContainer" parent="HBoxContainer" unique_id=783656242]
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")

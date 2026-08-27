@@ -12,8 +12,6 @@
 [ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="6_onwq6"]
 [ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="7_8x4lo"]
 [ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="8_pm386"]
-[ext_resource type="RDShaderFile" uid="uid://dyxn6g5gvoge7" path="res://addons/easy-compositor/debug/shader_stages/debug_overlay.glsl" id="9_o438o"]
-[ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="10_7x4fh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4fh6k"]
 ground_bottom_color = Color(0.7907238, 0.73137456, 0.6657407, 1)
@@ -36,23 +34,10 @@ needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("6_onwq6")
 samples = 4
-debug = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_7x4fh"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("10_7x4fh")
-debug_page = 1
-debug = true
-metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
-
 [sub_resource type="Compositor" id="Compositor_5v3c7"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_o1hov"), SubResource("CompositorEffect_7x4fh")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_o1hov")])
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5h11f"]
 size = Vector2(10, 10)
