@@ -81,6 +81,9 @@ func generate_all() -> void:
 	for i in generation_presets.size():
 		var preset: BlurGenerationPreset = generation_presets[i]
 		
+		if !preset.enabled:
+			continue
+		
 		var display: GeneratedBlurDisplay = displays[i]
 		
 		await generate(preset, display)
@@ -160,8 +163,6 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 		# the end of the motion, instead of at a subdivision before it. It makes
 		# the range of motion captured consistent between reoslutions.
 		var current_position: float = start_position + time_offset * time_range + (i + step_offset) * step_size
-		
-		#await get_tree().create_timer(0.5).timeout
 		
 		viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 		

@@ -1,10 +1,21 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://bddwtc61668pi"]
 
-[ext_resource type="Texture2D" uid="uid://ddsbaw5dpmcvt" path="res://benchmarks/race_track/assets/Grating_04_clean.jpg" id="1_8jr6q"]
 [ext_resource type="Texture2D" uid="uid://d31jnxfpv7cc1" path="res://benchmarks/race_track/assets/Grating_04_bump.jpg" id="2_syn3i"]
 
+[sub_resource type="Gradient" id="Gradient_25xml"]
+offsets = PackedFloat32Array(0.43495935, 0.4512195)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4v75y"]
+frequency = 0.1146
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iulv5"]
+noise = SubResource("FastNoiseLite_4v75y")
+color_ramp = SubResource("Gradient_25xml")
+seamless = true
+
 [resource]
-albedo_texture = ExtResource("1_8jr6q")
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_iulv5")
 metallic = 1.0
 metallic_specular = 0.0
 metallic_texture = ExtResource("2_syn3i")
@@ -19,7 +30,7 @@ heightmap_deep_parallax = true
 heightmap_min_layers = 32
 heightmap_max_layers = 32
 heightmap_texture = ExtResource("2_syn3i")
-uv1_scale = Vector3(5.021, 22.745, 1.328)
+uv1_scale = Vector3(0.346, 22.745, 1.328)
 uv1_offset = Vector3(0.037, 0.21203, 1.45519e-11)
 texture_filter = 5
 distance_fade_min_distance = 10.0

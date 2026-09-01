@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d4kc3fq1xqy4j"]
+
+[ext_resource type="Script" uid="uid://c8tireab6qyuy" path="res://node_2d.gd" id="1_wtcfe"]
+
+[node name="Node2D" type="Node2D" unique_id=2077225661 node_paths=PackedStringArray("start_marker", "end_marker")]
+script = ExtResource("1_wtcfe")
+start_marker = NodePath("StartMarker")
+end_marker = NodePath("StartMarker/EndMarker")
+
+[node name="StartMarker" type="Marker2D" parent="." unique_id=1692776227]
+position = Vector2(50, 50)
+
+[node name="EndMarker" type="Marker2D" parent="StartMarker" unique_id=1801273403]
+position = Vector2(-106, -181)

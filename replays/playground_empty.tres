@@ -1,0 +1,182 @@
+[gd_resource type="Resource" script_class="SceneRecord" format=3 uid="uid://cqlbh3vs6vw6l"]
+
+[ext_resource type="Script" uid="uid://dq3pdgokm34yq" path="res://addons/sphynx-replay-tool/classes/node_record.gd" id="1_i87h4"]
+[ext_resource type="Script" uid="uid://bghujlaljsoqw" path="res://addons/sphynx-replay-tool/classes/captures/node_capture.gd" id="2_e1qsd"]
+[ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="3_7s1wc"]
+[ext_resource type="RDShaderFile" uid="uid://bn88jkvr17x4j" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max.glsl" id="4_rh821"]
+[ext_resource type="RDShaderFile" uid="uid://i6rnwhmss334" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_overlay.glsl" id="5_vssoc"]
+[ext_resource type="RDShaderFile" uid="uid://bxoh2vy6m4s83" path="res://addons/godot-motion-blur/pre_blur_processing/shader_stages/pre_blur_processor.glsl" id="6_gksdl"]
+[ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="7_2la42"]
+[ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="8_0haof"]
+[ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="9_0nrqb"]
+[ext_resource type="Script" uid="uid://dj1nucyttiasg" path="res://addons/sphynx-replay-tool/classes/captures/node_3d_capture.gd" id="10_7jc40"]
+[ext_resource type="Script" uid="uid://cqel2pdrnuolt" path="res://camera_3d.gd" id="11_inrri"]
+[ext_resource type="Texture2D" uid="uid://cl8xutdd5pdu8" path="res://benchmarks/teapots/3d-models/texture_07.png" id="12_5tps8"]
+[ext_resource type="Texture2D" uid="uid://cnfwl8040q4mt" path="res://icon.svg" id="13_d30f8"]
+[ext_resource type="Script" uid="uid://br6rroh08c1wk" path="res://benchmarks/playground/mesh_instance_3d_2.gd" id="14_p0lfl"]
+[ext_resource type="Script" uid="uid://dc4tnwdmnvtir" path="res://addons/sphynx-replay-tool/classes/scene_record.gd" id="15_7toov"]
+[ext_resource type="Resource" uid="uid://bihpw7q0nqj66" path="res://addons/sphynx-replay-tool/resources/default_settings.tres" id="16_x2j4v"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4fh6k"]
+ground_bottom_color = Color(0.7907238, 0.73137456, 0.6657407, 1)
+
+[sub_resource type="Sky" id="Sky_aa0ni"]
+sky_material = SubResource("ProceduralSkyMaterial_4fh6k")
+
+[sub_resource type="Environment" id="Environment_5v3c7"]
+background_mode = 2
+sky = SubResource("Sky_aa0ni")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_d5wxy"]
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_o1hov"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = true
+needs_normal_roughness = false
+script = ExtResource("7_2la42")
+samples = 4
+metadata/_custom_type_script = "uid://c5jewnyvlca7j"
+
+[sub_resource type="Compositor" id="Compositor_5v3c7"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_o1hov")])
+
+[sub_resource type="PackedScene" id="PackedScene_papfv"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("WorldEnvironment", "environment", "camera_attributes", "compositor"),
+"node_count": 1,
+"node_ids": PackedInt32Array(139412736),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 0, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0),
+"variants": [SubResource("Environment_5v3c7"), SubResource("CameraAttributesPractical_d5wxy"), SubResource("Compositor_5v3c7")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_qcnmn"]
+script = ExtResource("1_i87h4")
+CaptureType = ExtResource("2_e1qsd")
+node_capture = SubResource("PackedScene_papfv")
+node_initial_state = null
+despawn_time = 3.183
+
+[sub_resource type="PackedScene" id="PackedScene_ir3e0"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("DirectionalLight3D", "transform"),
+"node_count": 1,
+"node_ids": PackedInt32Array(759137879),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 0, 0, -1, 1, 1, 0, 0),
+"variants": [Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_rdmqr"]
+script = ExtResource("1_i87h4")
+CaptureType = ExtResource("10_7jc40")
+node_capture = SubResource("PackedScene_ir3e0")
+node_initial_state = Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)
+despawn_time = 3.183
+times = Array[float]([0.00099999999999766, 3.1479999999999997])
+states = [Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0), Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)]
+
+[sub_resource type="PackedScene" id="PackedScene_pj8v2"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("Camera3D", "transform", "current", "script", "initial_mouse_mode"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1559026898),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 0, 0, -1, 4, 1, 0, 2, 1, 3, 2, 4, 3, 0),
+"variants": [Transform3D(0.9903367, -0.04204343, 0.13215722, 0, 0.9529395, 0.30316046, -0.13868375, -0.30023092, 0.943731, 2.6430078, 3.644556, 5.8489923), true, ExtResource("11_inrri"), 0],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_ve2ot"]
+script = ExtResource("1_i87h4")
+CaptureType = ExtResource("10_7jc40")
+node_capture = SubResource("PackedScene_pj8v2")
+node_initial_state = Transform3D(0.9903367, -0.04204343, 0.13215724, 0, 0.95293957, 0.30316046, -0.13868375, -0.30023095, 0.943731, 2.6430078, 3.644556, 5.8489923)
+despawn_time = 3.183
+times = Array[float]([0.00099999999999766, 3.1479999999999997])
+states = [Transform3D(0.9903367, -0.04204343, 0.13215724, 0, 0.95293957, 0.30316046, -0.13868375, -0.30023095, 0.943731, 2.6430078, 3.644556, 5.8489923), Transform3D(0.9903367, -0.04204343, 0.13215724, 0, 0.95293957, 0.30316046, -0.13868375, -0.30023095, 0.943731, 2.6430078, 3.644556, 5.8489923)]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5h11f"]
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bx8n8"]
+albedo_texture = ExtResource("12_5tps8")
+
+[sub_resource type="PackedScene" id="PackedScene_xmp7g"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("MeshInstance3D", "transform", "mesh", "surface_material_override/0"),
+"node_count": 1,
+"node_ids": PackedInt32Array(762995117),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 0, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0),
+"variants": [Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0, 0, -1.2954595), SubResource("PlaneMesh_5h11f"), SubResource("StandardMaterial3D_bx8n8")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_vxmr3"]
+script = ExtResource("1_i87h4")
+CaptureType = ExtResource("10_7jc40")
+node_capture = SubResource("PackedScene_xmp7g")
+node_initial_state = Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0, 0, -1.2954595)
+despawn_time = 3.183
+times = Array[float]([0.00099999999999766, 3.1479999999999997])
+states = [Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0, 0, -1.2954595), Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0, 0, -1.2954595)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2wl8"]
+albedo_texture = ExtResource("13_d30f8")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5h11f"]
+
+[sub_resource type="PackedScene" id="PackedScene_4dt1t"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("MeshInstance3D2", "transform", "material_override", "mesh", "script", "MeshInstance3D"),
+"node_count": 1,
+"node_ids": PackedInt32Array(1330147994),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 5, 0, -1, 4, 1, 0, 2, 1, 3, 2, 4, 3, 0),
+"variants": [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3639914, 2.44955, 0), SubResource("StandardMaterial3D_v2wl8"), SubResource("BoxMesh_5h11f"), ExtResource("14_p0lfl")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_m6cgx"]
+script = ExtResource("1_i87h4")
+CaptureType = ExtResource("10_7jc40")
+node_capture = SubResource("PackedScene_4dt1t")
+node_initial_state = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3639914, 2.44955, 0)
+despawn_time = 3.183
+times = Array[float]([0.00099999999999766, 0.04799999999999826, 0.0990000000000002, 0.14899999999999736, 0.19899999999999807, 0.2489999999999988, 0.2989999999999995, 0.3490000000000002, 0.39899999999999736, 0.44899999999999807, 0.4979999999999976, 0.5489999999999995, 0.5990000000000002, 0.6489999999999974, 0.6989999999999981, 0.75, 0.7989999999999995, 0.8490000000000002, 0.8989999999999974, 0.9480000000000004, 0.9989999999999988, 1.0489999999999997, 1.0990000000000002, 1.1479999999999997, 1.198999999999998, 1.2489999999999988, 1.2989999999999997, 1.3490000000000002, 1.3989999999999974, 1.448999999999998, 1.4989999999999988, 1.5489999999999997, 1.5990000000000002, 1.6479999999999997, 1.6980000000000004, 1.7489999999999988, 1.7989999999999997, 1.849, 1.8989999999999976, 1.948999999999998, 1.9979999999999976, 2.0489999999999995, 2.099, 2.151, 2.2010000000000005, 2.253999999999998, 2.3039999999999985, 2.349, 2.398999999999998, 2.451999999999998, 2.5, 2.5519999999999996, 2.599999999999998, 2.648999999999998, 2.6999999999999993, 2.7479999999999976, 2.7989999999999995, 2.847999999999999, 2.8979999999999997, 2.948999999999998, 2.9979999999999976, 3.0479999999999983, 3.099999999999998, 3.1479999999999997])
+states = [Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3639914, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.61692166, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.534995, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9891872, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.848133, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.941665, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2550173, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8965955, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0808651, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9055102, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7489252, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1583457, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9186, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8887844, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0944824, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.653752, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.79405254, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1910105, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9880393, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.313322, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9576263, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8192306, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8950284, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4018583, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.50453186, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.472449, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2169626, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4535885, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9870906, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.733241, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7321165, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.141773, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17332056, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7488657, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.405738, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5786657, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9995465, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6311088, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5030918, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8743832, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07867819, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.019318, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6684484, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7661314, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.985208, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.478174, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.258624, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5626551, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.41025645, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2828836, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8605146, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7931414, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9428444, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36043, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0634074, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3213601, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6608159, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5386634, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.015712, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.858768, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.934731, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.231609, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8604085, 2.44955, 0), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0767082, 2.44955, 0)]
+
+[resource]
+script = ExtResource("15_7toov")
+settings = ExtResource("16_x2j4v")
+viewport_size = Vector2i(1152, 648)
+node_records = Array[ExtResource("1_i87h4")]([SubResource("Resource_qcnmn"), SubResource("Resource_rdmqr"), SubResource("Resource_ve2ot"), SubResource("Resource_vxmr3"), SubResource("Resource_m6cgx")])
+record_duration = 3.183
+state = 2

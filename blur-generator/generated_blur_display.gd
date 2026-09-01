@@ -44,6 +44,8 @@ func _on_save_file_selected(file: String) -> void:
 func _ready() -> void:
 	_preset_name_label = Label.new()
 	
+	_preset_name_label.add_theme_constant_override("outline_size", 5)
+	
 	_preset_name_label.add_theme_font_size_override("font_size", 30)
 	
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST

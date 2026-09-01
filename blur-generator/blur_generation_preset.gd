@@ -4,6 +4,8 @@ extends Resource
 
 @export var name: String
 
+@export var enabled: bool = true
+
 ## The framerate to emulate. Lower framerate means larger slice of time being
 ## accumulated over.
 @export var framerate: int = 30

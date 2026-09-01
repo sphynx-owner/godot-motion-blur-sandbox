@@ -12,6 +12,9 @@
 [ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="6_onwq6"]
 [ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="7_8x4lo"]
 [ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="8_pm386"]
+[ext_resource type="RDShaderFile" uid="uid://dyxn6g5gvoge7" path="res://addons/easy-compositor/debug/shader_stages/debug_overlay.glsl" id="9_7x4fh"]
+[ext_resource type="Texture2D" uid="uid://cl8xutdd5pdu8" path="res://benchmarks/teapots/3d-models/texture_07.png" id="10_75n04"]
+[ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="10_onwq6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4fh6k"]
 ground_bottom_color = Color(0.7907238, 0.73137456, 0.6657407, 1)
@@ -34,16 +37,30 @@ needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("6_onwq6")
 samples = 4
+debug = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
+[sub_resource type="CompositorEffect" id="CompositorEffect_4fu8a"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("10_onwq6")
+debug_page = 6
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
 [sub_resource type="Compositor" id="Compositor_5v3c7"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_o1hov")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_o1hov"), SubResource("CompositorEffect_4fu8a")])
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5h11f"]
 size = Vector2(10, 10)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bx8n8"]
-albedo_texture = ExtResource("3_o1hov")
+albedo_texture = ExtResource("10_75n04")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2wl8"]
 albedo_texture = ExtResource("3_o1hov")
@@ -80,6 +97,7 @@ script = ExtResource("2_wnnsp")
 initial_mouse_mode = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=762995117]
+transform = Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0, 0, -1.2954595)
 mesh = SubResource("PlaneMesh_5h11f")
 surface_material_override/0 = SubResource("StandardMaterial3D_bx8n8")
 
@@ -96,4 +114,3 @@ timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="Spawner" unique_id=818856384]
 wait_time = 0.5
-autostart = true

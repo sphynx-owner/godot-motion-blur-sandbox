@@ -1,0 +1,341 @@
+[gd_scene format=3 uid="uid://cmkvaqepoyyp8"]
+
+[ext_resource type="Script" uid="uid://b1n5cy3k5bmrv" path="res://benchmarks/moving_over_ground/camera_3d.gd" id="1_7nhcd"]
+[ext_resource type="Texture2D" uid="uid://cnfwl8040q4mt" path="res://icon.svg" id="1_q5yxh"]
+[ext_resource type="PackedScene" uid="uid://cufewixnl0wk7" path="res://option_slider.tscn" id="1_s4lfl"]
+[ext_resource type="PackedScene" uid="uid://b4t1vbd82lvn5" path="res://addons/sphynx-replay-tool/ui/relpay_menu.tscn" id="2_l13bl"]
+[ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="3_01sqk"]
+[ext_resource type="RDShaderFile" uid="uid://bn88jkvr17x4j" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max.glsl" id="4_wjqqd"]
+[ext_resource type="RDShaderFile" uid="uid://i6rnwhmss334" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_overlay.glsl" id="5_uauej"]
+[ext_resource type="RDShaderFile" uid="uid://bxoh2vy6m4s83" path="res://addons/godot-motion-blur/pre_blur_processing/shader_stages/pre_blur_processor.glsl" id="6_tj2wb"]
+[ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="7_nwqb2"]
+[ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="8_tcbty"]
+[ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="9_ht302"]
+[ext_resource type="RDShaderFile" uid="uid://dyxn6g5gvoge7" path="res://addons/easy-compositor/debug/shader_stages/debug_overlay.glsl" id="10_q0pga"]
+[ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="11_nymxt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5iqjx"]
+
+[sub_resource type="Sky" id="Sky_bx8n8"]
+sky_material = SubResource("ProceduralSkyMaterial_5iqjx")
+
+[sub_resource type="Environment" id="Environment_5h11f"]
+background_mode = 2
+sky = SubResource("Sky_bx8n8")
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_u7uh2"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = true
+needs_normal_roughness = false
+script = ExtResource("7_nwqb2")
+debug = true
+metadata/_custom_type_script = "uid://c5jewnyvlca7j"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_gr5ra"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("11_nymxt")
+debug_page = 11
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_s4lfl"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_u7uh2"), SubResource("CompositorEffect_gr5ra")])
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q5yxh"]
+albedo_texture = ExtResource("1_q5yxh")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bx8n8"]
+size = Vector2(10000, 10000)
+
+[node name="MovindOverGround" type="Node3D" unique_id=1437049895]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1892480744]
+
+[node name="FocusControl" type="Control" parent="CanvasLayer" unique_id=609722717]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+
+[node name="FoldableContainer" type="FoldableContainer" parent="CanvasLayer" unique_id=868531686]
+custom_minimum_size = Vector2(1000, 0)
+offset_right = 24.0
+offset_bottom = 32.0
+folded = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/FoldableContainer" unique_id=188461124]
+visible = false
+layout_mode = 2
+
+[node name="RotationYOptionSlider" parent="CanvasLayer/FoldableContainer/VBoxContainer" unique_id=1293420776 node_paths=PackedStringArray("target_node") instance=ExtResource("1_s4lfl")]
+option_name = "rotation_y"
+target_node = NodePath("../../../../Camera3D")
+_custom_property_list_values = Dictionary[String, Variant]({
+"_import_path": NodePath(""),
+"accessibility_controls_nodes": Array[NodePath]([]),
+"accessibility_described_by_nodes": Array[NodePath]([]),
+"accessibility_description": "",
+"accessibility_flow_to_nodes": Array[NodePath]([]),
+"accessibility_labeled_by_nodes": Array[NodePath]([]),
+"accessibility_live": 0,
+"accessibility_name": "",
+"alignment": null,
+"allow_greater": false,
+"allow_lesser": false,
+"auto_translate_mode": 0,
+"clip_children": 0,
+"clip_contents": false,
+"custom_minimum_size": Vector2(0, 0),
+"editor_description": "",
+"exp_edit": false,
+"focus_behavior_recursive": 0,
+"focus_mode": 2,
+"focus_neighbor_bottom": NodePath(""),
+"focus_neighbor_left": NodePath(""),
+"focus_neighbor_right": NodePath(""),
+"focus_neighbor_top": NodePath(""),
+"focus_next": NodePath(""),
+"focus_previous": NodePath(""),
+"layout_direction": 0,
+"layout_mode": 2,
+"light_mask": 1,
+"localize_numeral_system": true,
+"material": null,
+"max_value": 3.142,
+"min_value": -3.142,
+"modulate": Color(1, 1, 1, 1),
+"mouse_behavior_recursive": 0,
+"mouse_default_cursor_shape": 0,
+"mouse_filter": 0,
+"mouse_force_pass_scroll_events": true,
+"page": 0.0,
+"physics_interpolation_mode": 2,
+"pivot_offset": Vector2(0, 0),
+"position": Vector2(0, 0),
+"process_mode": 0,
+"process_physics_priority": 0,
+"process_priority": 0,
+"process_thread_group": 0,
+"rotation": 0.0,
+"rounded": false,
+"scale": Vector2(1, 1),
+"script": null,
+"self_modulate": Color(1, 1, 1, 1),
+"shortcut_context": null,
+"show_behind_parent": false,
+"size": Vector2(8, 16),
+"size_flags_horizontal": 3,
+"size_flags_stretch_ratio": 1.0,
+"size_flags_vertical": 0,
+"step": 0.0,
+"texture_filter": 0,
+"texture_repeat": 0,
+"theme": null,
+"theme_override_constants/separation": null,
+"theme_type_variation": &"",
+"tooltip_auto_translate_mode": 0,
+"tooltip_text": "",
+"top_level": false,
+"unique_name_in_owner": false,
+"use_parent_material": false,
+"value": 0.0,
+"visibility_layer": 1,
+"visible": true,
+"y_sort_enabled": false,
+"z_as_relative": true,
+"z_index": 0
+})
+min_value = -3.142
+max_value = 3.142
+step = 0.0
+
+[node name="SpeedOptionSlider" parent="CanvasLayer/FoldableContainer/VBoxContainer" unique_id=1766472033 node_paths=PackedStringArray("target_node") instance=ExtResource("1_s4lfl")]
+option_name = "speed"
+target_node = NodePath("../../../../Camera3D")
+_custom_property_list_values = Dictionary[String, Variant]({
+"_import_path": NodePath(""),
+"accessibility_controls_nodes": Array[NodePath]([]),
+"accessibility_described_by_nodes": Array[NodePath]([]),
+"accessibility_description": "",
+"accessibility_flow_to_nodes": Array[NodePath]([]),
+"accessibility_labeled_by_nodes": Array[NodePath]([]),
+"accessibility_live": 0,
+"accessibility_name": "",
+"alignment": null,
+"allow_greater": false,
+"allow_lesser": false,
+"auto_translate_mode": 0,
+"clip_children": 0,
+"clip_contents": false,
+"custom_minimum_size": Vector2(0, 0),
+"editor_description": "",
+"exp_edit": false,
+"focus_behavior_recursive": 0,
+"focus_mode": 2,
+"focus_neighbor_bottom": NodePath(""),
+"focus_neighbor_left": NodePath(""),
+"focus_neighbor_right": NodePath(""),
+"focus_neighbor_top": NodePath(""),
+"focus_next": NodePath(""),
+"focus_previous": NodePath(""),
+"layout_direction": 0,
+"layout_mode": 2,
+"light_mask": 1,
+"localize_numeral_system": true,
+"material": null,
+"max_value": 50.0,
+"min_value": -50.0,
+"modulate": Color(1, 1, 1, 1),
+"mouse_behavior_recursive": 0,
+"mouse_default_cursor_shape": 0,
+"mouse_filter": 0,
+"mouse_force_pass_scroll_events": true,
+"page": 0.0,
+"physics_interpolation_mode": 2,
+"pivot_offset": Vector2(0, 0),
+"position": Vector2(0, 0),
+"process_mode": 0,
+"process_physics_priority": 0,
+"process_priority": 0,
+"process_thread_group": 0,
+"rotation": 0.0,
+"rounded": false,
+"scale": Vector2(1, 1),
+"script": null,
+"self_modulate": Color(1, 1, 1, 1),
+"shortcut_context": null,
+"show_behind_parent": false,
+"size": Vector2(8, 16),
+"size_flags_horizontal": 3,
+"size_flags_stretch_ratio": 1.0,
+"size_flags_vertical": 0,
+"step": 0.0,
+"texture_filter": 0,
+"texture_repeat": 0,
+"theme": null,
+"theme_override_constants/separation": null,
+"theme_type_variation": &"",
+"tooltip_auto_translate_mode": 0,
+"tooltip_text": "",
+"top_level": false,
+"unique_name_in_owner": false,
+"use_parent_material": false,
+"value": 0.0,
+"visibility_layer": 1,
+"visible": true,
+"y_sort_enabled": false,
+"z_as_relative": true,
+"z_index": 0
+})
+min_value = -50.0
+max_value = 50.0
+step = 0.0
+
+[node name="HeightOptionSlider" parent="CanvasLayer/FoldableContainer/VBoxContainer" unique_id=7836889 node_paths=PackedStringArray("target_node") instance=ExtResource("1_s4lfl")]
+option_name = "height"
+target_node = NodePath("../../../../Camera3D")
+_custom_property_list_values = Dictionary[String, Variant]({
+"_import_path": NodePath(""),
+"accessibility_controls_nodes": Array[NodePath]([]),
+"accessibility_described_by_nodes": Array[NodePath]([]),
+"accessibility_description": "",
+"accessibility_flow_to_nodes": Array[NodePath]([]),
+"accessibility_labeled_by_nodes": Array[NodePath]([]),
+"accessibility_live": 0,
+"accessibility_name": "",
+"alignment": null,
+"allow_greater": false,
+"allow_lesser": false,
+"auto_translate_mode": 0,
+"clip_children": 0,
+"clip_contents": false,
+"custom_minimum_size": Vector2(0, 0),
+"editor_description": "",
+"exp_edit": false,
+"focus_behavior_recursive": 0,
+"focus_mode": 2,
+"focus_neighbor_bottom": NodePath(""),
+"focus_neighbor_left": NodePath(""),
+"focus_neighbor_right": NodePath(""),
+"focus_neighbor_top": NodePath(""),
+"focus_next": NodePath(""),
+"focus_previous": NodePath(""),
+"layout_direction": 0,
+"layout_mode": 2,
+"light_mask": 1,
+"localize_numeral_system": true,
+"material": null,
+"max_value": 50.0,
+"min_value": 0.0,
+"modulate": Color(1, 1, 1, 1),
+"mouse_behavior_recursive": 0,
+"mouse_default_cursor_shape": 0,
+"mouse_filter": 0,
+"mouse_force_pass_scroll_events": true,
+"page": 0.0,
+"physics_interpolation_mode": 2,
+"pivot_offset": Vector2(0, 0),
+"position": Vector2(0, 0),
+"process_mode": 0,
+"process_physics_priority": 0,
+"process_priority": 0,
+"process_thread_group": 0,
+"rotation": 0.0,
+"rounded": false,
+"scale": Vector2(1, 1),
+"script": null,
+"self_modulate": Color(1, 1, 1, 1),
+"shortcut_context": null,
+"show_behind_parent": false,
+"size": Vector2(8, 16),
+"size_flags_horizontal": 3,
+"size_flags_stretch_ratio": 1.0,
+"size_flags_vertical": 0,
+"step": 0.0,
+"texture_filter": 0,
+"texture_repeat": 0,
+"theme": null,
+"theme_override_constants/separation": null,
+"theme_type_variation": &"",
+"tooltip_auto_translate_mode": 0,
+"tooltip_text": "",
+"top_level": false,
+"unique_name_in_owner": false,
+"use_parent_material": false,
+"value": 0.0,
+"visibility_layer": 1,
+"visible": true,
+"y_sort_enabled": false,
+"z_as_relative": true,
+"z_index": 0
+})
+max_value = 50.0
+step = 0.0
+
+[node name="Control" parent="CanvasLayer" unique_id=937283115 instance=ExtResource("2_l13bl")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1609227648]
+environment = SubResource("Environment_5h11f")
+compositor = SubResource("Compositor_s4lfl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1744307375]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002, -0.001, -4999.405)
+material_override = SubResource("StandardMaterial3D_q5yxh")
+mesh = SubResource("PlaneMesh_bx8n8")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1789801740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10254192, 0)
+script = ExtResource("1_7nhcd")

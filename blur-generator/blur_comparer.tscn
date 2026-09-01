@@ -16,32 +16,10 @@
 [ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="12_4fu8a"]
 [ext_resource type="Script" uid="uid://7iqb4ur7xgki" path="res://blur-generator/generated_blur_display.gd" id="17_4orhx"]
 
-[sub_resource type="Resource" id="Resource_xv8vq"]
+[sub_resource type="Resource" id="Resource_4fu8a"]
 script = ExtResource("4_dd3du")
 name = "Ground Truth"
-metadata/_custom_type_script = "uid://2v8fkru312eu"
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_4orhx"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = true
-needs_normal_roughness = false
-script = ExtResource("7_33nae")
-samples = 4
-framerate_independent = false
-debug = true
-metadata/_custom_type_script = "uid://c5jewnyvlca7j"
-
-[sub_resource type="Compositor" id="Compositor_f8kah"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_4orhx")])
-
-[sub_resource type="Resource" id="Resource_4orhx"]
-script = ExtResource("4_dd3du")
-name = "Guertin-Sphynx blur"
-resolution = 2
-custom_compositor = SubResource("Compositor_f8kah")
+enabled = false
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_f8kah"]
@@ -54,10 +32,31 @@ needs_normal_roughness = false
 script = ExtResource("7_33nae")
 samples = 4
 framerate_independent = false
+metadata/_custom_type_script = "uid://c5jewnyvlca7j"
+
+[sub_resource type="Compositor" id="Compositor_2f4hc"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_f8kah")])
+
+[sub_resource type="Resource" id="Resource_f8kah"]
+script = ExtResource("4_dd3du")
+name = "Guertin-Sphynx blur"
+enabled = false
+resolution = 2
+custom_compositor = SubResource("Compositor_2f4hc")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_2f4hc"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = true
+needs_normal_roughness = false
+script = ExtResource("7_33nae")
 debug = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_bx8n8"]
+[sub_resource type="CompositorEffect" id="CompositorEffect_021a7"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
@@ -66,33 +65,22 @@ needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("12_4fu8a")
 draw_debug = true
+full_screen = true
 debug = true
 metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
 
-[sub_resource type="Compositor" id="Compositor_2f4hc"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_f8kah"), SubResource("CompositorEffect_bx8n8")])
+[sub_resource type="Compositor" id="Compositor_4orhx"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_021a7")])
 
-[sub_resource type="Resource" id="Resource_f8kah"]
+[sub_resource type="Resource" id="Resource_pi0kv"]
 script = ExtResource("4_dd3du")
-name = "Debug Page 1"
+name = "Debug 1"
+enabled = false
 resolution = 2
-custom_compositor = SubResource("Compositor_2f4hc")
+custom_compositor = SubResource("Compositor_4orhx")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_pi0kv"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = true
-needs_normal_roughness = false
-script = ExtResource("7_33nae")
-samples = 4
-framerate_independent = false
-debug = true
-metadata/_custom_type_script = "uid://c5jewnyvlca7j"
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_4fu8a"]
+[sub_resource type="CompositorEffect" id="CompositorEffect_nbiod"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
@@ -102,20 +90,147 @@ needs_normal_roughness = false
 script = ExtResource("12_4fu8a")
 draw_debug = true
 debug_page = 1
+full_screen = true
 debug = true
 metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
 
-[sub_resource type="Compositor" id="Compositor_4fu8a"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0kv"), SubResource("CompositorEffect_4fu8a")])
+[sub_resource type="Compositor" id="Compositor_33nae"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_nbiod")])
 
-[sub_resource type="Resource" id="Resource_2f4hc"]
+[sub_resource type="Resource" id="Resource_etsjh"]
 script = ExtResource("4_dd3du")
-name = "Debug Page 2"
+name = "Debug 2"
+enabled = false
 resolution = 2
-custom_compositor = SubResource("Compositor_4fu8a")
+custom_compositor = SubResource("Compositor_33nae")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_2f4hc"]
+[sub_resource type="CompositorEffect" id="CompositorEffect_h5itm"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 2
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_2koiq"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_h5itm")])
+
+[sub_resource type="Resource" id="Resource_fuanp"]
+script = ExtResource("4_dd3du")
+name = "Debug 3"
+enabled = false
+resolution = 2
+custom_compositor = SubResource("Compositor_2koiq")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_8ck1i"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 3
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_j33as"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_8ck1i")])
+
+[sub_resource type="Resource" id="Resource_wybdw"]
+script = ExtResource("4_dd3du")
+name = "Debug 4"
+enabled = false
+resolution = 2
+custom_compositor = SubResource("Compositor_j33as")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_hwji8"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 4
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_4shso"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_hwji8")])
+
+[sub_resource type="Resource" id="Resource_mihnl"]
+script = ExtResource("4_dd3du")
+name = "Debug 5"
+enabled = false
+resolution = 2
+custom_compositor = SubResource("Compositor_4shso")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_2oqhc"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 5
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_vkdp8"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_2oqhc")])
+
+[sub_resource type="Resource" id="Resource_hbg42"]
+script = ExtResource("4_dd3du")
+name = "Debug 6"
+enabled = false
+resolution = 2
+custom_compositor = SubResource("Compositor_vkdp8")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_57wpm"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 6
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_2k2j8"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_57wpm")])
+
+[sub_resource type="Resource" id="Resource_0kwps"]
+script = ExtResource("4_dd3du")
+name = "Debug 7"
+enabled = false
+resolution = 2
+custom_compositor = SubResource("Compositor_2k2j8")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_xmpqa"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
@@ -129,17 +244,18 @@ full_screen = true
 debug = true
 metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
 
-[sub_resource type="Compositor" id="Compositor_6cvt0"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0kv"), SubResource("CompositorEffect_2f4hc")])
+[sub_resource type="Compositor" id="Compositor_kosel"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_xmpqa")])
 
-[sub_resource type="Resource" id="Resource_4fu8a"]
+[sub_resource type="Resource" id="Resource_wxgwy"]
 script = ExtResource("4_dd3du")
-name = "Debug Page 2"
+name = "Debug 8"
+enabled = false
 resolution = 2
-custom_compositor = SubResource("Compositor_6cvt0")
+custom_compositor = SubResource("Compositor_kosel")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_33nae"]
+[sub_resource type="CompositorEffect" id="CompositorEffect_4mkw5"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
@@ -148,27 +264,95 @@ needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("12_4fu8a")
 draw_debug = true
-debug_page = 2
+debug_page = 8
+full_screen = true
 debug = true
 metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
 
-[sub_resource type="Compositor" id="Compositor_etsjh"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pi0kv"), SubResource("CompositorEffect_33nae")])
+[sub_resource type="Compositor" id="Compositor_qbdm0"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_4mkw5")])
 
-[sub_resource type="Resource" id="Resource_2koiq"]
+[sub_resource type="Resource" id="Resource_qyfyt"]
 script = ExtResource("4_dd3du")
-name = "Debug Page 2"
+name = "Debug 9"
+enabled = false
 resolution = 2
-custom_compositor = SubResource("Compositor_etsjh")
+custom_compositor = SubResource("Compositor_qbdm0")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
 
-[sub_resource type="Animation" id="Animation_4fu8a"]
-length = 1.762999999999991
+[sub_resource type="CompositorEffect" id="CompositorEffect_vlwpc"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 9
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_2f4hc"]
-_data = {
-&"replay_animation": SubResource("Animation_4fu8a")
-}
+[sub_resource type="Compositor" id="Compositor_i3shc"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_vlwpc")])
+
+[sub_resource type="Resource" id="Resource_2ljh1"]
+script = ExtResource("4_dd3du")
+name = "Debug 10"
+enabled = false
+resolution = 2
+custom_compositor = SubResource("Compositor_i3shc")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_lfd3l"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 10
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_4jdo3"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_lfd3l")])
+
+[sub_resource type="Resource" id="Resource_u3ah5"]
+script = ExtResource("4_dd3du")
+name = "Debug 11"
+enabled = false
+resolution = 2
+custom_compositor = SubResource("Compositor_4jdo3")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_uxdkx"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("12_4fu8a")
+draw_debug = true
+debug_page = 11
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_28dsi"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4hc"), SubResource("CompositorEffect_uxdkx")])
+
+[sub_resource type="Resource" id="Resource_pw3sa"]
+script = ExtResource("4_dd3du")
+name = "Debug 12"
+resolution = 2
+custom_compositor = SubResource("Compositor_28dsi")
+metadata/_custom_type_script = "uid://2v8fkru312eu"
 
 [node name="BlurComparer" type="Control" unique_id=1833348784 node_paths=PackedStringArray("replayer")]
 layout_mode = 3
@@ -186,9 +370,9 @@ physics_interpolation_mode = 2
 script = ExtResource("3_mapp4")
 replayer = NodePath("../HBoxContainer/SubViewportContainer/SubViewport/Replayer")
 use_captured_position = true
-captured_position = 1.65
-generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_xv8vq"), SubResource("Resource_4orhx"), SubResource("Resource_4orhx"), SubResource("Resource_f8kah"), SubResource("Resource_2f4hc"), SubResource("Resource_4fu8a"), SubResource("Resource_2koiq")])
-displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay"), NodePath("../HBoxContainer/GeneratedBlurDisplay4"), NodePath("../GeneratedBlurDisplay2"), NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay2"), NodePath("../GeneratedBlurDisplay4"), NodePath("../HBoxContainer/GeneratedBlurDisplay5")]
+captured_position = 1.55
+generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_4fu8a"), SubResource("Resource_f8kah"), SubResource("Resource_pi0kv"), SubResource("Resource_etsjh"), SubResource("Resource_fuanp"), SubResource("Resource_wybdw"), SubResource("Resource_mihnl"), SubResource("Resource_hbg42"), SubResource("Resource_0kwps"), SubResource("Resource_wxgwy"), SubResource("Resource_qyfyt"), SubResource("Resource_2ljh1"), SubResource("Resource_u3ah5"), SubResource("Resource_pw3sa")])
+displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay4"), NodePath("../HBoxContainer/GeneratedBlurDisplay5"), NodePath("../HBoxContainer/GeneratedBlurDisplay6"), NodePath("../HBoxContainer/GeneratedBlurDisplay7"), NodePath("../HBoxContainer/GeneratedBlurDisplay8"), NodePath("../HBoxContainer/GeneratedBlurDisplay9"), NodePath("../HBoxContainer/GeneratedBlurDisplay10"), NodePath("../HBoxContainer/GeneratedBlurDisplay11"), NodePath("../HBoxContainer/GeneratedBlurDisplay12"), NodePath("../HBoxContainer/GeneratedBlurDisplay13"), NodePath("../HBoxContainer/GeneratedBlurDisplay14"), NodePath("../HBoxContainer/GeneratedBlurDisplay15"), NodePath("../HBoxContainer/GeneratedBlurDisplay16")]
 metadata/_custom_type_script = "uid://clxyfxkllajvu"
 
 [node name="HBoxContainer" type="GridContainer" parent="." unique_id=841730416]
@@ -209,57 +393,124 @@ size = Vector2i(1152, 648)
 
 [node name="Replayer" type="AnimationPlayer" parent="HBoxContainer/SubViewportContainer/SubViewport" unique_id=2102459665]
 root_node = NodePath(".")
-libraries/ = SubResource("AnimationLibrary_2f4hc")
 script = ExtResource("1_ri01s")
 metadata/_custom_type_script = "uid://bcksmwxwkpkw8"
 
-[node name="GeneratedBlurDisplay" type="SubViewportContainer" parent="HBoxContainer" unique_id=1399594282]
-texture_filter = 1
-layout_mode = 2
-script = ExtResource("17_4orhx")
-save_file = "res://images/fix_noise_harmonics(ground_truth).png"
-metadata/_custom_type_script = "uid://7iqb4ur7xgki"
-
-[node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="HBoxContainer" unique_id=1935117158]
-texture_filter = 1
-layout_mode = 2
-script = ExtResource("17_4orhx")
-save_file = "res://images/fix_y_velocity_dilution(after).png"
-metadata/_custom_type_script = "uid://7iqb4ur7xgki"
-
 [node name="GeneratedBlurDisplay3" type="SubViewportContainer" parent="HBoxContainer" unique_id=1231578033]
+visible = false
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
-[node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="HBoxContainer" unique_id=1429213589]
+[node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="HBoxContainer" unique_id=1542631463]
+visible = false
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
+save_file = "res://images/with_double_sampling.png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
-[node name="GeneratedBlurDisplay5" type="SubViewportContainer" parent="HBoxContainer" unique_id=783656242]
+[node name="GeneratedBlurDisplay5" type="SubViewportContainer" parent="HBoxContainer" unique_id=1980538500]
+visible = false
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
+save_file = "res://images/playground_1_plain_color.png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
-[node name="GeneratedBlurDisplay2" type="SubViewportContainer" parent="." unique_id=1581164363]
-self_modulate = Color(1, 1, 1, 0.75686276)
+[node name="GeneratedBlurDisplay6" type="SubViewportContainer" parent="HBoxContainer" unique_id=39596718]
+visible = false
 texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay7" type="SubViewportContainer" parent="HBoxContainer" unique_id=1507567726]
+visible = false
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay8" type="SubViewportContainer" parent="HBoxContainer" unique_id=261061230]
+visible = false
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay9" type="SubViewportContainer" parent="HBoxContainer" unique_id=1478919983]
+visible = false
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay10" type="SubViewportContainer" parent="HBoxContainer" unique_id=1979827301]
+visible = false
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay11" type="SubViewportContainer" parent="HBoxContainer" unique_id=1174767701]
+visible = false
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay12" type="SubViewportContainer" parent="HBoxContainer" unique_id=254139876]
+visible = false
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay13" type="SubViewportContainer" parent="HBoxContainer" unique_id=696910568]
+visible = false
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay14" type="SubViewportContainer" parent="HBoxContainer" unique_id=1132698906]
+visible = false
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay15" type="SubViewportContainer" parent="HBoxContainer" unique_id=1005807891]
+visible = false
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="GeneratedBlurDisplay16" type="SubViewportContainer" parent="HBoxContainer" unique_id=949823484]
+texture_filter = 1
+layout_mode = 2
+script = ExtResource("17_4orhx")
+save_file = "res://images/pipeline_output_blur_reconstruction.png"
+metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+
+[node name="Label" type="Label" parent="." unique_id=1654702529]
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-script = ExtResource("17_4orhx")
-save_file = "res://images/y_velocity_mistake(after).png"
-metadata/_custom_type_script = "uid://7iqb4ur7xgki"
-
-[node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="." unique_id=777395960]
-self_modulate = Color(1, 1, 1, 0.4862745)
-texture_filter = 1
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-script = ExtResource("17_4orhx")
-metadata/_custom_type_script = "uid://7iqb4ur7xgki"
+offset_left = 1558.0
+offset_top = 1960.0
+offset_right = 1598.0
+offset_bottom = 1983.0
+text = "trtatsa"
