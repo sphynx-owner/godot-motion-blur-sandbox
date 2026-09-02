@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bcix3u1b01ncj" path="res://blur-generator/blur_comparer.gd" id="1_dd3du"]
 [ext_resource type="Script" uid="uid://bcksmwxwkpkw8" path="res://addons/sphynx-replay-tool/classes/replayer.gd" id="1_ri01s"]
-[ext_resource type="Resource" uid="uid://8ysuh1818e7b" path="res://replays/race_track_fast.tres" id="2_4fu8a"]
+[ext_resource type="Resource" uid="uid://nwklk6qx0a1f" path="res://replays/side_moving_pillars.tres" id="2_4fu8a"]
 [ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="3_2f4hc"]
 [ext_resource type="Script" uid="uid://clxyfxkllajvu" path="res://blur-generator/blur_generator.gd" id="3_mapp4"]
 [ext_resource type="RDShaderFile" uid="uid://bn88jkvr17x4j" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max.glsl" id="4_4orhx"]
@@ -30,7 +30,7 @@ effect_callback_type = 4
 needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("7_33nae")
-samples = 4
+samples = 32
 framerate_independent = false
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
@@ -40,7 +40,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_f8ka
 [sub_resource type="Resource" id="Resource_f8kah"]
 script = ExtResource("4_dd3du")
 name = "Guertin-Sphynx blur"
-enabled = false
+framerate = 60
 resolution = 2
 custom_compositor = SubResource("Compositor_2f4hc")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
@@ -350,6 +350,7 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_2f4h
 [sub_resource type="Resource" id="Resource_pw3sa"]
 script = ExtResource("4_dd3du")
 name = "Debug 12"
+enabled = false
 resolution = 2
 custom_compositor = SubResource("Compositor_28dsi")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
@@ -405,7 +406,6 @@ save_file = "res://images/pipeline_output_blur_reconstruction.png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay4" type="SubViewportContainer" parent="HBoxContainer" unique_id=1542631463]
-visible = false
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")

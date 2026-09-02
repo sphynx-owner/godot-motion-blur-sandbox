@@ -1,6 +1,6 @@
 extends Camera3D
 
-@export var speed: float = 10.0
+@export var speed: float = 20.0
 
 
 func _process(delta: float) -> void:

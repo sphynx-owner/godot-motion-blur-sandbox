@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cmkvaqepoyyp8"]
 
 [ext_resource type="Script" uid="uid://b1n5cy3k5bmrv" path="res://benchmarks/moving_over_ground/camera_3d.gd" id="1_7nhcd"]
+[ext_resource type="Texture2D" uid="uid://cnfwl8040q4mt" path="res://icon.svg" id="1_q5yxh"]
 [ext_resource type="PackedScene" uid="uid://cufewixnl0wk7" path="res://option_slider.tscn" id="1_s4lfl"]
 [ext_resource type="Script" uid="uid://cdket1ntxrc5m" path="res://benchmarks/moving_over_ground/movind_over_ground.gd" id="1_wjqqd"]
 [ext_resource type="PackedScene" uid="uid://b4t1vbd82lvn5" path="res://addons/sphynx-replay-tool/ui/relpay_menu.tscn" id="2_l13bl"]
@@ -51,21 +52,16 @@ metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_u7uh2"), SubResource("CompositorEffect_gr5ra")])
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q5yxh"]
-metallic_specular = 0.0
-roughness = 0.0
+albedo_color = Color(0.107321255, 0.24191654, 0.046323717, 1)
+albedo_texture = ExtResource("1_q5yxh")
 uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_bx8n8"]
 size = Vector2(10000, 10000)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wjqqd"]
-albedo_color = Color(0, 0, 0, 1)
-metallic_specular = 0.0
-roughness = 0.0
-
 [sub_resource type="CylinderMesh" id="CylinderMesh_5h11f"]
-top_radius = 0.021484375
-bottom_radius = 0.021484375
+top_radius = 0.061035156
+bottom_radius = 0.061035156
 
 [node name="MovindOverGround" type="Node3D" unique_id=1437049895 node_paths=PackedStringArray("pillar")]
 script = ExtResource("1_wjqqd")
@@ -349,13 +345,12 @@ material_override = SubResource("StandardMaterial3D_q5yxh")
 mesh = SubResource("PlaneMesh_bx8n8")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1789801740]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1.0485001, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 script = ExtResource("1_7nhcd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1847477253]
-transform = Transform3D(0.71477187, 3.0569897e-08, -0.6993577, 0.6993577, -3.124367e-08, 0.71477187, 0, -1, -4.371139e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=780871783]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0382051, 0.87614095, 0.06287098)
-material_override = SubResource("StandardMaterial3D_wjqqd")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.370498, 0.87614095, 0.06287098)
 mesh = SubResource("CylinderMesh_5h11f")

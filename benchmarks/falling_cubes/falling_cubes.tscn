@@ -1,7 +1,16 @@
 [gd_scene format=3 uid="uid://bngg0hdt3buas"]
 
 [ext_resource type="Script" uid="uid://bkjpm2dp8knf3" path="res://benchmarks/falling_cubes/cube_spawner.gd" id="1_aa0ni"]
-[ext_resource type="PackedScene" uid="uid://b4t1vbd82lvn5" path="res://addons/sphynx_replay_tool/ui/relpay_menu.tscn" id="1_dgpyu"]
+[ext_resource type="PackedScene" uid="uid://b4t1vbd82lvn5" path="res://addons/sphynx-replay-tool/ui/relpay_menu.tscn" id="1_dgpyu"]
+[ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="2_dgpyu"]
+[ext_resource type="RDShaderFile" uid="uid://bn88jkvr17x4j" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max.glsl" id="3_74s67"]
+[ext_resource type="RDShaderFile" uid="uid://i6rnwhmss334" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_overlay.glsl" id="4_xoery"]
+[ext_resource type="RDShaderFile" uid="uid://bxoh2vy6m4s83" path="res://addons/godot-motion-blur/pre_blur_processing/shader_stages/pre_blur_processor.glsl" id="5_hsw1i"]
+[ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="6_7edp2"]
+[ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="7_8or0i"]
+[ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="8_f44yt"]
+[ext_resource type="RDShaderFile" uid="uid://dyxn6g5gvoge7" path="res://addons/easy-compositor/debug/shader_stages/debug_overlay.glsl" id="9_74457"]
+[ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="10_xmhx4"]
 [ext_resource type="Script" uid="uid://cqel2pdrnuolt" path="res://camera_3d.gd" id="11_e2kve"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w8xxa"]
@@ -15,6 +24,30 @@ background_mode = 2
 sky = SubResource("Sky_aa0ni")
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_mckeo"]
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_g34wy"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = true
+needs_normal_roughness = false
+script = ExtResource("6_7edp2")
+metadata/_custom_type_script = "uid://c5jewnyvlca7j"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_ghp7t"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("10_xmhx4")
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
+[sub_resource type="Compositor" id="Compositor_uityi"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_g34wy"), SubResource("CompositorEffect_ghp7t")])
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_w8xxa"]
 
@@ -67,6 +100,7 @@ text = "clear"
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=229132950]
 environment = SubResource("Environment_r6scx")
 camera_attributes = SubResource("CameraAttributesPractical_mckeo")
+compositor = SubResource("Compositor_uityi")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1757729023]
 transform = Transform3D(1, 0, 0, 0, 0.35059968, 0.9365254, 0, -0.9365254, 0.35059968, 0, 0, 0)
