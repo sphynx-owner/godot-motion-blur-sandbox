@@ -37,6 +37,8 @@ needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("6_onwq6")
 samples = 4
+velocity_threshold_lower = 12.435
+velocity_threshold_upper = 22.6
 debug = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 

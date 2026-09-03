@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bcix3u1b01ncj" path="res://blur-generator/blur_comparer.gd" id="1_dd3du"]
 [ext_resource type="Script" uid="uid://bcksmwxwkpkw8" path="res://addons/sphynx-replay-tool/classes/replayer.gd" id="1_ri01s"]
-[ext_resource type="Resource" uid="uid://nwklk6qx0a1f" path="res://replays/side_moving_pillars.tres" id="2_4fu8a"]
+[ext_resource type="Resource" uid="uid://cqlbh3vs6vw6l" path="res://replays/playground_empty.tres" id="2_4fu8a"]
 [ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="3_2f4hc"]
 [ext_resource type="Script" uid="uid://clxyfxkllajvu" path="res://blur-generator/blur_generator.gd" id="3_mapp4"]
 [ext_resource type="RDShaderFile" uid="uid://bn88jkvr17x4j" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_neighbor_max.glsl" id="4_4orhx"]
@@ -30,7 +30,7 @@ effect_callback_type = 4
 needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("7_33nae")
-samples = 32
+samples = 4
 framerate_independent = false
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
@@ -40,7 +40,6 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_f8ka
 [sub_resource type="Resource" id="Resource_f8kah"]
 script = ExtResource("4_dd3du")
 name = "Guertin-Sphynx blur"
-framerate = 60
 resolution = 2
 custom_compositor = SubResource("Compositor_2f4hc")
 metadata/_custom_type_script = "uid://2v8fkru312eu"
@@ -370,7 +369,6 @@ scene_record = ExtResource("2_4fu8a")
 physics_interpolation_mode = 2
 script = ExtResource("3_mapp4")
 replayer = NodePath("../HBoxContainer/SubViewportContainer/SubViewport/Replayer")
-use_captured_position = true
 captured_position = 1.55
 generation_presets = Array[ExtResource("4_dd3du")]([SubResource("Resource_4fu8a"), SubResource("Resource_f8kah"), SubResource("Resource_pi0kv"), SubResource("Resource_etsjh"), SubResource("Resource_fuanp"), SubResource("Resource_wybdw"), SubResource("Resource_mihnl"), SubResource("Resource_hbg42"), SubResource("Resource_0kwps"), SubResource("Resource_wxgwy"), SubResource("Resource_qyfyt"), SubResource("Resource_2ljh1"), SubResource("Resource_u3ah5"), SubResource("Resource_pw3sa")])
 displays = [NodePath("../HBoxContainer/GeneratedBlurDisplay3"), NodePath("../HBoxContainer/GeneratedBlurDisplay4"), NodePath("../HBoxContainer/GeneratedBlurDisplay5"), NodePath("../HBoxContainer/GeneratedBlurDisplay6"), NodePath("../HBoxContainer/GeneratedBlurDisplay7"), NodePath("../HBoxContainer/GeneratedBlurDisplay8"), NodePath("../HBoxContainer/GeneratedBlurDisplay9"), NodePath("../HBoxContainer/GeneratedBlurDisplay10"), NodePath("../HBoxContainer/GeneratedBlurDisplay11"), NodePath("../HBoxContainer/GeneratedBlurDisplay12"), NodePath("../HBoxContainer/GeneratedBlurDisplay13"), NodePath("../HBoxContainer/GeneratedBlurDisplay14"), NodePath("../HBoxContainer/GeneratedBlurDisplay15"), NodePath("../HBoxContainer/GeneratedBlurDisplay16")]
@@ -409,7 +407,7 @@ metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")
-save_file = "res://images/with_double_sampling.png"
+save_file = "res://images/playground_output.png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay5" type="SubViewportContainer" parent="HBoxContainer" unique_id=1980538500]
@@ -501,6 +499,7 @@ save_file = "res://images/pipeline_output_blur_reconstruction.png"
 metadata/_custom_type_script = "uid://7iqb4ur7xgki"
 
 [node name="GeneratedBlurDisplay16" type="SubViewportContainer" parent="HBoxContainer" unique_id=949823484]
+visible = false
 texture_filter = 1
 layout_mode = 2
 script = ExtResource("17_4orhx")

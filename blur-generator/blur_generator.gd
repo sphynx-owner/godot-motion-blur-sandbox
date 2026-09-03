@@ -11,7 +11,6 @@ enum Directionality{CENTERED, LEADING, TRAILING}
 # Then, the blur generator would work directly with each camera. However, it means that I would have to
 # have all cameras follow the same position, and share the same world.
 
-
 @export var replayer: Replayer:
 	set(value):
 		replayer = value
