@@ -71,6 +71,7 @@ effect_callback_type = 4
 needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("12_4ncjf")
+samples = 4
 uncapped_independence = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 

@@ -4,11 +4,14 @@ extends SubViewportContainer
 
 @export_file_path("*.png") var save_file: String
 
+@export var file_variation: String = ""
+
 @export_tool_button("save image") var save_image = _save_image
 
 var preset_name: String:
 	set(value):
 		_preset_name_label.text = value
+		name = value
 	
 	get():
 		return _preset_name_label.text
@@ -29,7 +32,7 @@ func _save_image() -> void:
 		push_error("save file path is empty, cannot save image")
 		return
 	
-	(get_child(2) as SubViewport).get_texture().get_image().save_png(save_file)
+	(get_child(2) as SubViewport).get_texture().get_image().save_png(save_file.trim_suffix(".png").trim_suffix(file_variation) + file_variation + ".png")
 	
 	
 	#_editor_file_dialog.popup_centered()

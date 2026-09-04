@@ -26,3 +26,9 @@ func _input(event: InputEvent) -> void:
 			var compositor_effect: GuertinSphynxMotionBlur = EasyCompositorUtils.get_or_add_active_compositor_effect(self, GuertinSphynxMotionBlur)
 			
 			compositor_effect.enabled = !compositor_effect.enabled
+		
+		
+		if event.keycode == KEY_X and event.pressed:
+			var camera_attributes: CameraAttributesPractical = EasyCompositorUtils.get_active_camera_attributes(self)
+			
+			camera_attributes.motion_blur_enabled = !camera_attributes.motion_blur_enabled

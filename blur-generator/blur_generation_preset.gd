@@ -2,7 +2,10 @@
 class_name BlurGenerationPreset
 extends Resource
 
-@export var name: String
+@export var name: String:
+	set(value):
+		name = value
+		resource_name = value
 
 @export var enabled: bool = true
 
