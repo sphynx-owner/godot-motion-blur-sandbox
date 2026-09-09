@@ -14,16 +14,18 @@ func _generate_pillars() -> void:
 		push_error("no pillar mesh set")
 		return
 	
-	var current_position: Vector3 = pillar.global_position
 	
-	while current_position.z > -5000:
-		current_position += Vector3(0, 0, -5)
+	for i in 5:
+		var current_position: Vector3 = pillar.global_position + Vector3(i * 10, 0, 0)
 		
-		var new_pillar: Node3D = pillar.duplicate()
-		
-		add_child(new_pillar)
-		
-		new_pillar.global_position = current_position
+		while current_position.z > -5000:
+			current_position += Vector3(0, 0, -5)
+			
+			var new_pillar: Node3D = pillar.duplicate()
+			
+			add_child(new_pillar)
+			
+			new_pillar.global_position = current_position
 
 
 func _ready() -> void:

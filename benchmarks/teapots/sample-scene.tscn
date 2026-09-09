@@ -200,6 +200,9 @@ cull_mode = 2
 albedo_texture = ExtResource("12_jrhya")
 uv1_scale = Vector3(1.05, 1.05, 1.05)
 uv1_triplanar = true
+stencil_mode = 3
+stencil_flags = 2
+stencil_reference = 3
 
 [sub_resource type="Animation" id="Animation_elxtm"]
 length = 0.001

@@ -13,13 +13,13 @@ config_version=5
 config/name="godot motion blur sandbox"
 run/main_scene="uid://cmkvaqepoyyp8"
 config/features=PackedStringArray("4.7", "Forward Plus")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-window/vsync/vsync_mode=0
 
 [editor_plugins]
 
@@ -70,5 +70,4 @@ ESC={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-anti_aliasing/quality/msaa_3d=1
 textures/default_filters/texture_mipmap_bias=-1.0

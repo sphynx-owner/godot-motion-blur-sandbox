@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://c5jewnyvlca7j" path="res://addons/godot-motion-blur/guertin/guertin_motion_blur.gd" id="12_4ncjf"]
 [ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="13_4e24t"]
 [ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="14_p38i3"]
+[ext_resource type="RDShaderFile" uid="uid://dyxn6g5gvoge7" path="res://addons/easy-compositor/debug/shader_stages/debug_overlay.glsl" id="15_qon7d"]
+[ext_resource type="Script" uid="uid://bi6xhl7lpiu4n" path="res://addons/easy-compositor/debug/post_process_debug.gd" id="16_lb6vi"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_qon7d"]
 _surfaces = [{
@@ -61,8 +63,6 @@ sky = SubResource("Sky_l1xls")
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_yxadb"]
-
 [sub_resource type="CompositorEffect" id="CompositorEffect_qon7d"]
 resource_local_to_scene = false
 resource_name = ""
@@ -71,12 +71,26 @@ effect_callback_type = 4
 needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("12_4ncjf")
-samples = 4
-uncapped_independence = true
+velocity_threshold_lower = 1.25
+velocity_threshold_upper = 5.355
+debug = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
+[sub_resource type="CompositorEffect" id="CompositorEffect_mcvyn"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("16_lb6vi")
+debug_page = 3
+full_screen = true
+debug = true
+metadata/_custom_type_script = "uid://bi6xhl7lpiu4n"
+
 [sub_resource type="Compositor" id="Compositor_8vskp"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_qon7d")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_qon7d"), SubResource("CompositorEffect_mcvyn")])
 
 [node name="Main" type="Node3D" unique_id=1063267377]
 script = ExtResource("1_yxadb")
@@ -434,7 +448,6 @@ metadata/_custom_type_script = "uid://bqetsc5r7v7oo"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=90400409]
 environment = SubResource("Environment_clhr7")
-camera_attributes = SubResource("CameraAttributesPractical_yxadb")
 compositor = SubResource("Compositor_8vskp")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1766517879]

@@ -11,7 +11,7 @@
 [ext_resource type="RDShaderFile" uid="uid://d0s5upcgm7r6l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_x.glsl" id="8_tcbty"]
 [ext_resource type="RDShaderFile" uid="uid://ceetvitdbio4l" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_tile_max_y.glsl" id="9_ht302"]
 [ext_resource type="RDShaderFile" uid="uid://dbt0noaywafgs" path="res://addons/godot-motion-blur/guertin/shader_stages/guertin_sphynx_blur.glsl" id="11_01sqk"]
-[ext_resource type="Texture2D" uid="uid://cl8xutdd5pdu8" path="res://benchmarks/teapots/3d-models/texture_07.png" id="13_wjqqd"]
+[ext_resource type="Texture2D" uid="uid://cnfwl8040q4mt" path="res://icon.svg" id="11_xw7f8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5iqjx"]
 
@@ -23,9 +23,6 @@ background_mode = 2
 sky = SubResource("Sky_bx8n8")
 ssao_enabled = true
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_xw7f8"]
-dof_blur_far_enabled = true
-
 [sub_resource type="CompositorEffect" id="CompositorEffect_01sqk"]
 resource_local_to_scene = false
 resource_name = ""
@@ -34,21 +31,21 @@ effect_callback_type = 4
 needs_motion_vectors = true
 needs_normal_roughness = false
 script = ExtResource("7_nwqb2")
-uncapped_independence = true
 metadata/_custom_type_script = "uid://c5jewnyvlca7j"
 
 [sub_resource type="Compositor" id="Compositor_s4lfl"]
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_01sqk")])
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q5yxh"]
-albedo_texture = ExtResource("13_wjqqd")
+albedo_texture = ExtResource("11_xw7f8")
 uv1_triplanar = true
+texture_filter = 5
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_bx8n8"]
 size = Vector2(10000, 10000)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wjqqd"]
-albedo_color = Color(0, 0, 0, 1)
+albedo_color = Color(0, 1, 0, 1)
 metallic_specular = 0.0
 roughness = 0.0
 
@@ -420,11 +417,10 @@ offset_left = -40.0
 offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "0.0200000000|0050"
+text = "0.1000000000|0010"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1609227648]
 environment = SubResource("Environment_5h11f")
-camera_attributes = SubResource("CameraAttributesPractical_xw7f8")
 compositor = SubResource("Compositor_s4lfl")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1744307375]
@@ -433,7 +429,7 @@ material_override = SubResource("StandardMaterial3D_q5yxh")
 mesh = SubResource("PlaneMesh_bx8n8")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1789801740]
-transform = Transform3D(-4.371139e-08, 0.564967, -0.82511353, 0, 0.82511353, 0.564967, 1, 2.469549e-08, -3.6066858e-08, 0, 1.0485001, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1.0485001, 0)
 script = ExtResource("1_7nhcd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1847477253]

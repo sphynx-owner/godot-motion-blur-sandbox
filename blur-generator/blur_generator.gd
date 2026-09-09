@@ -101,6 +101,7 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 	
 	var viewport: Viewport = ReplayUtils.safe_get_viewport(replayer)
 	
+	# HACK @sphynx-owner: we need the container to force updates to it.
 	var viewport_container: SubViewportContainer = viewport.get_parent()
 	
 	var start_position: float = captured_position if use_captured_position else replayer.get_position()
@@ -144,10 +145,7 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 	
 	viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 	
-	# HACK @sphynx-owner: queueing a redraw of the parent SubViewportContainer. Otherwise
-	# the generation can get stuck as long as there are no updates driven by player input.
 	viewport_container.queue_redraw()
-	
 	await RenderingServer.frame_post_draw
 	
 	effect.current_accumulation = 1
@@ -167,17 +165,10 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 		
 		replayer.seek_rep(current_position)
 		
-		# HACK @sphynx-owner: queueing a redraw of the parent SubViewportContainer. Otherwise
-		# the generation can get stuck as long as there are no updates driven by player input.
 		viewport_container.queue_redraw()
-		
 		await RenderingServer.frame_post_draw
 	
-	# HACK @sphynx-owner: queueing a redraw of the parent SubViewportContainer. Otherwise
-	# the generation can get stuck as long as there are no updates driven by player input.
-	viewport_container.queue_redraw()
-	
-	await _copy_blur_generator_compositor_result(effect, display)
+	_copy_blur_generator_compositor_result(effect, display)
 	
 	viewport.render_target_update_mode = SubViewport.UPDATE_WHEN_VISIBLE
 	
@@ -198,33 +189,19 @@ func generate(preset: BlurGenerationPreset, display: GeneratedBlurDisplay) -> vo
 # NOTE @sphynx-owner: I am basically using the same setup from the blur generator
 # compositor for generating the render device texture. The only difference is
 # the additional required RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT usage flag
-func _copy_blur_generator_compositor_result(effect: CompositorEffect, display: GeneratedBlurDisplay) -> void:
+func _copy_blur_generator_compositor_result(effect: BlurGeneratorCompositor, display: GeneratedBlurDisplay) -> void:
 	var tex_size: Vector2i = effect.texture_2d_rd.get_size()
 	
 	if !display.texture or Vector2i(display.texture.get_size()) != tex_size:
-		var texture_format := RDTextureFormat.new()
+		var texture_format: RDTextureFormat = rd.texture_get_format(effect.texture_2d_rd.texture_rd_rid)
 		
-		# create our output texture
-		texture_format = RDTextureFormat.new()
-		texture_format.texture_type = RenderingDevice.TEXTURE_TYPE_2D
-		texture_format.width = tex_size.x
-		texture_format.height = tex_size.y
-		texture_format.format = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
-		texture_format.usage_bits = RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT
+		texture_format.usage_bits |= RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT
 		
-		var new_texture = rd.texture_create(texture_format, RDTextureView.new())
+		var new_texture: RID = rd.texture_create(texture_format, RDTextureView.new())
 		
 		assert(new_texture.is_valid())
 		
 		var old_texture: RID = display.texture.texture_rd_rid
-	
-		# HACK @sphynx-skillcap: the new texture must be set into an RID variable,
-		# seems to get freed otherwise even if fed into a texture_rd_rid variable of a Texture2DRD
-		display.texture_rid = new_texture
-		
-		# HACK: We wait with both releasing the old texture, and replacing the
-		# texture_rd_rid, since it seems to clash with godot's rendering pipeline otherwise
-		await RenderingServer.frame_post_draw
 		
 		display.texture.texture_rd_rid = new_texture
 		
@@ -232,6 +209,6 @@ func _copy_blur_generator_compositor_result(effect: CompositorEffect, display: G
 		if old_texture.is_valid():
 			rd.free_rid(old_texture)
 	
-	rd.texture_copy(effect.texture, display.texture.texture_rd_rid, Vector3.ZERO, Vector3.ZERO, Vector3(tex_size.x, tex_size.y, 1), 0, 0, 0, 0)
+	rd.texture_copy(effect.texture_2d_rd.texture_rd_rid, display.texture.texture_rd_rid, Vector3.ZERO, Vector3.ZERO, Vector3(tex_size.x, tex_size.y, 1), 0, 0, 0, 0)
 
 #endregion
